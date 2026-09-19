@@ -24,9 +24,9 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
 | `GLOSSARY.md` | Shared domain vocabulary |
 | `CONTRIBUTING.md` | How to propose changes; document hierarchy; PR/commit rules |
 | `templates/ADR.md` | Copy-paste skeleton for a new ADR |
-| `ANALYSIS-2026-09-19.md` | Full codebase read: findings, weak points, progress log |
-| `workshops/` | Meeting/brainstorm records, append-only; incl. the frozen 20260918 legacy analysis (see CONTRIBUTING.md) |
-| `changelog/` | One summary per requested change (see CONTRIBUTING.md) |
+| `reviews/` | Dated codebase analyses (frozen at creation), e.g. `reviews/2026-09-19-codebase-analysis.md` |
+| `workshops/` | Append-only meeting records + frozen analyses |
+| `changelog/` | One file per requested change: `YYYY-MM-DD-NN-slug.md` (see AGENTS.md §4) |
 
 ## Rules
 

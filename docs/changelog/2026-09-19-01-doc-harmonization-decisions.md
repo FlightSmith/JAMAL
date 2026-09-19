@@ -19,5 +19,5 @@ parity checklist). Examples updated: `numerics.profile` renamed to
 `fluent_density_based_v1` + explicit `solver_family` field.
 
 Touches: DECISIONS.md, REQUIREMENTS.md, SPECS.md, SCOPE.md, README.md,
-OPEN-QUESTIONS.md, ANALYSIS-2026-09-19.md, examples/*.json, workshops/*,
+OPEN-QUESTIONS.md, reviews/2026-09-19-codebase-analysis.md, examples/*.json, workshops/*,
 examples README.
