@@ -3,7 +3,7 @@
 > **Status:** Living. Read in this order.
 
 **New starting point for the current review (2026-09-18):**
-[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>)
+[Requisitos para o refactor completo em Python](<workshops/20260918-requisitos-legacy-analysis.md>)
 documents the supplied shell/Python pipeline, its file contracts, 64 proposed
 requirements, acceptance scenarios and readable JSON examples. It separates
 confirmed decisions from observed behaviour and proposals. Physics and ANSA
@@ -15,16 +15,17 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
 | `SCOPE.md` | Why, for whom, in/out, constraints |
 | `DECISIONS.md` | Accepted decisions (ADR-0001…0012) — newest amendments take precedence |
 | `REQUIREMENTS.md` | What the system shall do (testable, prioritised) |
-| `TRACEABILITY.md` | Map between REQUISITOS RP-* IDs and FR/QA/OP/UX/DC IDs |
+| `TRACEABILITY.md` | Map between REQUISITOS RP-* IDs and FR/QA/OP/UX/DC IDs; ID status index |
+| `ACCEPTANCE-SCENARIOS.md` | AC-01…20 — the living acceptance scenarios (tests reference these) |
 | `SPECS.md` | Contracts and open details: JSON interface, equations, mesh metadata, config, solver input, post-processing |
 | `LEGACY-SWEEP-INVENTORY.md` | Legacy sweep shapes: the ADR-0012 parity checklist |
 | `WORKSHOPS.md` | Workshop outcomes + agendas for open specs |
-| `OPEN-QUESTIONS.md` | Unsettled decisions + v01 pain we refuse to reintroduce |
+| `OPEN-QUESTIONS.md` | Unsettled decisions (incl. D04–D08) + v01 pain we refuse to reintroduce |
 | `GLOSSARY.md` | Shared domain vocabulary |
 | `CONTRIBUTING.md` | How to propose changes; document hierarchy; PR/commit rules |
 | `templates/ADR.md` | Copy-paste skeleton for a new ADR |
 | `ANALYSIS-2026-09-19.md` | Full codebase read: findings, weak points, progress log |
-| `workshops/` | Meeting/brainstorm records, append-only (see CONTRIBUTING.md) |
+| `workshops/` | Meeting/brainstorm records, append-only; incl. the frozen 20260918 legacy analysis (see CONTRIBUTING.md) |
 | `changelog/` | One summary per requested change (see CONTRIBUTING.md) |
 
 ## Rules

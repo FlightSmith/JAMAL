@@ -16,7 +16,7 @@ solution without new iterations; POLAR 003 calculates beta 1…15 after
 reusing beta 0. Promoted to the ADR-0008 amendment and FR-033.
 
 **Deliverable:**
-[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>),
+[Requisitos para o refactor completo em Python](<workshops/20260918-requisitos-legacy-analysis.md>),
 with traceable requirements, acceptance scenarios, draft JSON examples and
 explicit conflicts with earlier atmosphere/metadata drafts. Proposed
 contracts are not automatically promoted to accepted ADRs.

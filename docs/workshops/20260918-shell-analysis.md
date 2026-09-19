@@ -26,25 +26,29 @@ foi promovida à emenda da ADR-0008, FR-033 e SPECS §6.2.
 
 ## Documento produzido
 
-[Requisitos para o refactor completo em Python](<../REQUISITOS-REFACTOR-PYTHON.md>)
+O registro de análise congelado
+[20260918-requisitos-legacy-analysis.md](<20260918-requisitos-legacy-analysis.md>)
 descreve fluxo e dependências, 64 requisitos propostos, 20 cenários de
-aceite, arquitetura e contratos propostos, limites do script ANSA retido,
-ADF, problemas que não devem ser copiados e decisões pendentes.
+aceite (hoje mantidos em
+[ACCEPTANCE-SCENARIOS.md](<../ACCEPTANCE-SCENARIOS.md>)), arquitetura e
+contratos propostos, limites do script ANSA retido, ADF, problemas que não
+devem ser copiados e decisões pendentes. Os documentos vivos
+(DECISIONS/REQUIREMENTS/SPECS/OPEN-QUESTIONS/TRACEABILITY) **prevalecem
+sobre** esse registro onde divergirem.
 
 Dois exemplos JSON ilustram as polares 0002 e 0003. São propostas de
 interface, não schema aprovado ou arquivos prontos para executar no HPC.
 
 ## Conflitos destacados para revisão
 
-- Definição de altitude e aplicação do desvio ISA: shell e rascunhos
-  anteriores expressam convenções diferentes, ainda sem referência física
-  homologada nesta análise.
-- Metadados de malha: os requisitos anteriores proíbem log scraping, mas
-  o script ANSA retido entrega informações no meshlog. O produtor de
-  metadados estruturados precisa ser escolhido.
+- Definição de altitude e aplicação do desvio ISA — **fechado pelo
+  ADR-0009** (altitude geométrica, ISAD em todas as grandezas).
+- Metadados de malha — **fechado pelo ADR-0010** (parser de meshlog
+  isolado como produtor provisório, substituível).
 - Tipos, limites e posições das operações ANSA precisam refletir a
-  capacidade do script retido, sem truncamento silencioso.
+  capacidade do script retido, sem truncamento silencioso (rewriting
+  planejado — SPECS §8.1).
 - Paridade de modos, contrato ADF, integração PBS e entradas reais
-  precisam de homologação específica.
+  precisam de homologação específica (D04–D08 em OPEN-QUESTIONS).
 
 Esses pontos não foram convertidos em decisões aceitas automaticamente.

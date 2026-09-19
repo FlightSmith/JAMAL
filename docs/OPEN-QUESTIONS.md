@@ -4,7 +4,7 @@
 > (historical defects and where they are closed; do not reopen without an ADR).
 
 The supplied implementation has now been analysed in
-[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>).
+[Requisitos para o refactor completo em Python](<workshops/20260918-requisitos-legacy-analysis.md>).
 Its D01–D08 group the remaining contracts and missing integration materials.
 **Status update (2026-09-19):** D01 closed by ADR-0009, D02 closed by
 ADR-0010, D03 direction set by ADR-0012 (legacy sweep semantics), and the
@@ -73,8 +73,41 @@ D08 (inputs).
 - [ ] Proposed `01-GRIDS` scope/layout versus accepted shared cache and work
       roots; lock behaviour and ownership.
 - [ ] Prepare-only boundary when a mesh or source solution is missing.
-- [ ] Atmosphere acceptance reference, ISA-deviation pressure behaviour at
-      sea level/11 km, geometric-altitude conventions, and coefficient axes/signs.
+
+## Open decision IDs (D04–D08) — absorbed from the frozen analysis record
+
+> Defined in
+> [20260918-requisitos-legacy-analysis.md](<workshops/20260918-requisitos-legacy-analysis.md>)
+> §13; tracked here. D01/D02 closed (ADR-0009/0010), D03 direction closed
+> (ADR-0012).
+
+- [ ] **D04 — Transform/morph grammar and ANSA translation.** Preserve
+      references/vectors defined in the case file; map real operations to
+      the retained script's positions and limits; confirm support for
+      fractions, layers, and settings beyond current limits. Merges with
+      the transform/morph grammar item above at W1.
+- [ ] **D05 — ADF contract and aerodynamic conventions.** Owner obtains a
+      real homologated ADF and its consumers; decide header/column/name/
+      precision compatibility (3/4-digit identity), nominal-metadata
+      handling; approve axes/signs/normalization. **This file is shared
+      with an external team** — its format contract needs explicit
+      versioning and their sign-off. Deliverable: SPECS §9 v1 + golden
+      ADF. Legacy format reference (22 columns, 32 metadata fields) is
+      recorded in SPECS §9.
+- [ ] **D06 — Exact parity-mode set to retire legacy.** Confirm need and
+      priority of COLD, 2D, per-angle grids, CL/CY drivers, fan/core/
+      propeller and probes; close probe sampling budget. Sliding-mesh
+      ANSA options do not prove solver support.
+- [ ] **D07 — Cluster integration.** Provide `submit_fluent`
+      contract/implementation or choose a direct PBS adapter; define
+      modules/versions, queues, resources, environment, and per-point
+      availability mechanism.
+- [ ] **D08 — Real inputs per scenario.** Replace the placeholder
+      `CARM.ansa` / `Batch_Scenario_carm.ansa` / `CARM.msh.h5` dummies
+      with real geometry/batch/mesh; supply numbered templates and
+      relevant geometries; `mfr.c` not located; `flowvis.ses`,
+      `distclcp_meta.py`, `extract_alpha_beta_3.py` exist only in
+      fixtures — validate versions/deployment if those modes are chosen.
 
 ## Deferred by the owner (not blockers for the current phase)
 

@@ -1,6 +1,33 @@
 # JAMAL — requisitos para o refactor completo em Python
 
+> **[FROZEN ANALYSIS RECORD — 2026-09-19]**
+>
+> This document is the deliverable of workshop 20260918-shell-analysis
+> (static analysis of the delivered hybrid package). It is **historical**:
+> it does not evolve, and its proposals are **superseded** by the living
+> documents, which take precedence wherever they differ:
+>
+> - `docs/DECISIONS.md` — accepted decisions (ADR-0001…0012; D01/D02/D03
+>   closed there)
+> - `docs/REQUIREMENTS.md` — the only shall-list (FR/QA/OP/UX/DC/WONT)
+> - `docs/SPECS.md` — contracts (interface, physics, mesh, journal, ADF)
+> - `docs/OPEN-QUESTIONS.md` — which decisions are still open (D04–D08)
+> - `docs/TRACEABILITY.md` — RP-*/AC-* ID status and the RP↔FR map
+> - `docs/ACCEPTANCE-SCENARIOS.md` — AC-01…20, living English version
+>
+> RP-* and AC-* IDs cited elsewhere are defined here and remain stable;
+> only their *status* is tracked in TRACEABILITY. The original analysis
+> text below is preserved verbatim from v0.1 (18/09/2026).
+
+---
+
 **Versão:** 0.1, 18/09/2026. **Estado:** documento para revisão, baseado na análise estática do pacote entregue e nas decisões do responsável pelo projeto.
+
+> Nota de atualização (2026-09-19): D01 foi fechado pelo ADR-0009
+> (altitude geométrica, ISAD em todas as grandezas), D02 pelo ADR-0010
+> (parser de meshlog isolado, substituível) e a direção de D03 pelo
+> ADR-0012 (semântica legada de varreduras como linha de base de
+> paridade). As seções 5.2, 8 e 13 devem ser lidas à luz desses ADRs.
 
 O objetivo é substituir a implementação de coordenação, preparação e pós-processamento do JAMAL por um backend em Python, mantendo um JSON legível como contrato com o futuro frontend. O resultado principal continua sendo a execução das polares no Fluent e a produção do ADF.
 
@@ -254,8 +281,8 @@ Para preservar decisões anteriores, os exemplos mantêm `geometry.reference` e 
 
 ### 6.2 Exemplos completos de estrutura
 
-- [POLAR 0002 — sweep de alpha e malha ANSA](<examples/json-interface-draft/polar-0002.json>).
-- [POLAR 0003 — sweep de beta a partir do ponto salvo](<examples/json-interface-draft/polar-0003.json>).
+- [POLAR 0002 — sweep de alpha e malha ANSA](<../examples/json-interface-draft/polar-0002.json>).
+- [POLAR 0003 — sweep de beta a partir do ponto salvo](<../examples/json-interface-draft/polar-0003.json>).
 
 Esses arquivos são JSON sintaticamente válido, sem comentários ou reticências. Representam as polares legadas 002/003 com a identidade de quatro dígitos já definida nos requisitos. Os valores de referência física vêm do REF-001. Os caminhos `assets/*`, a receita numérica nomeada e os parâmetros ilustrativos de meshing precisam ser associados a arquivos/perfis reais antes de qualquer execução. **Não são uma conversão fiel do template numerado 1, que não foi entregue.** Não existe ainda um JSON Schema implementado que os homologue.
 
@@ -497,18 +524,18 @@ Referências a funções/trechos permitem revisar as conclusões sem executar o 
 
 | Fonte | Arquivo e trechos relevantes |
 |---|---|
-| S01 | [bin/jamal.py](<../JAMAL_shell/bin/jamal.py>) — CLI, modos de job e laço principal de processamento. |
-| S02 | [simulation_case.py](<../JAMAL_shell/app/core/simulation_case.py>), [jamal.yml](<../JAMAL_shell/etc/jamal.yml>), [transformers.py](<../JAMAL_shell/app/utils/transformers.py>) e [postvalidators.py](<../JAMAL_shell/app/utils/postvalidators.py>) — leitura, modos, validação e listas. |
-| S03 | [workaround_to_shell.py](<../JAMAL_shell/app/core/workaround_to_shell.py>) — `_process_run_flags`, `_send_to_bash`, `_prepare_bash_environment`. |
-| S04 | [mesh_processor.py](<../JAMAL_shell/app/core/mesh_processor.py>) — `prepare_yaml_config` (~276), execução (~357), validação do log (~449–524) e workflow. |
-| S05 | [jamal.sh](<../JAMAL_shell/bin/jamal.sh>) — REF/SET (~471–604), origem salva (~633–675), física (~959–1045), zonas/BCs (~1146–1441), UDF/sweeps (~1449–1768), submissão (~1796–1893). |
-| S06 | [utils.sh](<../JAMAL_shell/lib/utils.sh>) — atmosfera (~349–510), substituição Fluent (~554), UDF (~869), `write_jou_flow_conditions` (~1016), `read_case_data_jou` (~1236), `set_flow_cond_sequence` (~1277), monitor (~1572). |
-| S07 | [ansamesh_script.py](<../JAMAL_shell/bin/ansamesh_script.py>) — `yaml_to_json`, `auto_config` (~127), `auto` e exportação Fluent (~2522–2537). |
-| S08 | [posproc.sh](<../JAMAL_shell/bin/posproc.sh>) — rotações (~23–193), seleção de produtos (~239), leitura de metadados, ADF (~543–937) e integrações opcionais posteriores. |
-| S09 | [coef_driver.c](<../JAMAL_Struct_Folders/00-SUPPORT/coef_driver.c>) e [class_Probes.py](<../JAMAL_shell/utils/class_Probes.py>) — controle de coeficientes/ângulos e iterações adicionadas em `_write_output` (~538). |
-| S10 | [matrixpy](<../JAMAL_Struct_Folders/matrixpy>) — exemplos CARM, referências de origem e configurações. |
-| S11 | [REF-001](<../JAMAL_Struct_Folders/00-SUPPORT/REF-001>), [SET-050](<../JAMAL_Struct_Folders/00-SUPPORT/SET-050>) e [SET-055](<../JAMAL_Struct_Folders/00-SUPPORT/SET-055>) — referências, controles/propulsor e receitas numéricas. |
-| S12 | [ansa_config_template.yaml](<../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config_template.yaml>), [ansa_config.yaml](<../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config.yaml>) e [CARM.ansa.meshlog](<../JAMAL_Struct_Folders/01-GRIDS/Fluent_Meters_CARM/CARM.ansa.meshlog>) — contrato de malha fornecido e metadados de exemplo. |
-| S13 | [prep_drag_rise.sh](<../JAMAL_Struct_Folders/00-SUPPORT/prep_drag_rise.sh>) — consumidor de ADF; testes de integração do legado removidos deste repositório (classificação apenas; não são homologação física). |
-| S14 | [DECISIONS.md](<DECISIONS.md>), [REQUIREMENTS.md](<REQUIREMENTS.md>), [SPECS.md](<SPECS.md>) e workshops — decisões anteriores e contratos ainda em revisão. |
+| S01 | [bin/jamal.py](<../../JAMAL_shell/bin/jamal.py>) — CLI, modos de job e laço principal de processamento. |
+| S02 | [simulation_case.py](<../../JAMAL_shell/app/core/simulation_case.py>), [jamal.yml](<../../JAMAL_shell/etc/jamal.yml>), [transformers.py](<../../JAMAL_shell/app/utils/transformers.py>) e [postvalidators.py](<../../JAMAL_shell/app/utils/postvalidators.py>) — leitura, modos, validação e listas. |
+| S03 | [workaround_to_shell.py](<../../JAMAL_shell/app/core/workaround_to_shell.py>) — `_process_run_flags`, `_send_to_bash`, `_prepare_bash_environment`. |
+| S04 | [mesh_processor.py](<../../JAMAL_shell/app/core/mesh_processor.py>) — `prepare_yaml_config` (~276), execução (~357), validação do log (~449–524) e workflow. |
+| S05 | [jamal.sh](<../../JAMAL_shell/bin/jamal.sh>) — REF/SET (~471–604), origem salva (~633–675), física (~959–1045), zonas/BCs (~1146–1441), UDF/sweeps (~1449–1768), submissão (~1796–1893). |
+| S06 | [utils.sh](<../../JAMAL_shell/lib/utils.sh>) — atmosfera (~349–510), substituição Fluent (~554), UDF (~869), `write_jou_flow_conditions` (~1016), `read_case_data_jou` (~1236), `set_flow_cond_sequence` (~1277), monitor (~1572). |
+| S07 | [ansamesh_script.py](<../../JAMAL_shell/bin/ansamesh_script.py>) — `yaml_to_json`, `auto_config` (~127), `auto` e exportação Fluent (~2522–2537). |
+| S08 | [posproc.sh](<../../JAMAL_shell/bin/posproc.sh>) — rotações (~23–193), seleção de produtos (~239), leitura de metadados, ADF (~543–937) e integrações opcionais posteriores. |
+| S09 | [coef_driver.c](<../../JAMAL_Struct_Folders/00-SUPPORT/coef_driver.c>) e [class_Probes.py](<../../JAMAL_shell/utils/class_Probes.py>) — controle de coeficientes/ângulos e iterações adicionadas em `_write_output` (~538). |
+| S10 | [matrixpy](<../../JAMAL_Struct_Folders/matrixpy>) — exemplos CARM, referências de origem e configurações. |
+| S11 | [REF-001](<../../JAMAL_Struct_Folders/00-SUPPORT/REF-001>), [SET-050](<../../JAMAL_Struct_Folders/00-SUPPORT/SET-050>) e [SET-055](<../../JAMAL_Struct_Folders/00-SUPPORT/SET-055>) — referências, controles/propulsor e receitas numéricas. |
+| S12 | [ansa_config_template.yaml](<../../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config_template.yaml>), [ansa_config.yaml](<../../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config.yaml>) e [CARM.ansa.meshlog](<../../JAMAL_Struct_Folders/01-GRIDS/Fluent_Meters_CARM/CARM.ansa.meshlog>) — contrato de malha fornecido e metadados de exemplo. |
+| S13 | [prep_drag_rise.sh](<../../JAMAL_Struct_Folders/00-SUPPORT/prep_drag_rise.sh>) — consumidor de ADF; testes de integração do legado removidos deste repositório (classificação apenas; não são homologação física). |
+| S14 | [DECISIONS.md](<../DECISIONS.md>), [REQUIREMENTS.md](<../REQUIREMENTS.md>), [SPECS.md](<../SPECS.md>) e workshops — decisões anteriores e contratos ainda em revisão. |
 

@@ -7,7 +7,7 @@
 > profiles by ADR-0011; sweep parity baseline by ADR-0012.
 
 > **Legacy-analysis review (2026-09-18):** the new
-> [Python refactor requirements](<REQUISITOS-REFACTOR-PYTHON.md>)
+> [Python refactor requirements](<workshops/20260918-requisitos-legacy-analysis.md>)
 > expand coverage from the supplied implementation. Its D01/D02 identified
 > the atmosphere and metadata conflicts — both now closed by ADR-0009 and
 > ADR-0010. D03 direction is set by ADR-0012 (legacy sweep semantics).

@@ -458,11 +458,49 @@ The relationship of this proposed directory layout to ADR-0001's mesh
 cache and isolated work roots remains open; the proposal does not replace
 the accepted sharing/isolation requirements.
 
+## 8.1 ANSA script limits and the planned rewrite
+
+Current hard limits of the retained script (reference implementation of
+the YAML contract: `JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config.yaml`
+/ `ansa_config_template.yaml`):
+
+| Aspect | Current limit / behaviour |
+|--------|---------------------------|
+| Geometries | max 5 (`MAX_GEOM_COUNT`); excess silently dropped |
+| Transform params | max 12 (`MAX_TRANS_PARAMS`), zero-filled; converted to `int` |
+| Morph params | max 12 (`MAX_MORPH_PARAMS`), zero-filled; converted to `int` |
+| Layers | `wlay` integer (count) or float (growth ratio) — type-switched |
+| Units | geometry in **mm**, reference lengths in **m** — per-field mapping, never a global scale |
+| Export | Fluent HDF5 in metres; other formats announced in comments only |
+
+**Planned rewrite (owner decision, 2026-09-19):**
+`ansamesh_script.py` will be rewritten to accept **an arbitrary number of
+geometries and parameters** and a **better structured input file**
+replacing the positional `%geom_n%`/`%trans_param_n%` placeholder
+substitution. Requirements for the rewrite:
+
+- Structured, named input (YAML/JSON) — no positional placeholders, no
+  zero-fill padding, no int truncation.
+- Arbitrary-length geometry and operation lists; limits become errors,
+  never silent truncation (RP-ME-07).
+- Per-field unit declaration (fixes the mm/m mixing at the source).
+- Structured **mesh metadata output** alongside the meshlog — this
+  replaces the interim meshlog parser (ADR-0010) when it lands.
+
+Until the rewrite lands, the current script stays unchanged (ADR-0007)
+and the isolated meshlog parser is the metadata producer (ADR-0010).
+Adapter work must therefore target the *contract*, not the placeholder
+mechanics.
+
 ---
 
 # 9. Post-processing and ADF
 
-> **Status:** Output responsibility accepted (ADR-0007); script/file contracts open.
+> **Status:** Output responsibility accepted (ADR-0007); script/file
+> contracts open (D05). **The ADF file is shared with an external team —
+> its format contract requires explicit versioning and the external
+> consumers' sign-off before any change** (AC-20). Solver convergence
+> classification is deferred and is not required now.
 
 After solver execution, the backend invokes a dedicated post-processing
 script to produce an aerodynamic data file (ADF). The ADF contains three
@@ -470,7 +508,36 @@ force and three moment coefficients in each of the body, wind and stability
 axis systems. Flow visualization figures, Cp and load distributions are
 optional and are not prerequisites for producing the ADF.
 
+## 9.1 Legacy ADF format reference (from the frozen analysis record, §9)
+
+The legacy post-processor writes a header (identity/configuration/polar/
+date), **32 metadata fields** and **22 data columns**. Any v2 ADF contract
+must be decided against this format — byte-compatibility is not a goal
+(WONT-006), but consumer compatibility is an explicit D05 decision.
+
+Data columns:
+
+~~~text
+MACH REYNOLDS ALPHA BETA
+CDB CYB CLB CRB25 CMB25 CNB25
+CDS CYS CLS CRS25 CMS25 CNS25
+CDW CYW CLW CRW25 CMW25 CNW25
+~~~
+
+The 32 metadata fields include SREF/CREF/BREF, moment centre, nominal
+Mach/Re, altitude, static/total pressures and temperatures, density, and
+deflections of four elevons, rudders, ailerons and flaps. Total results
+go to `ADF`, per-component results to `ADF_COMP`;
+`prep_drag_rise.sh` is a known consumer that parses these files.
+
+Normalization relations to verify: `q = ρV²/2`; forces ÷ `qS`; roll/yaw ÷
+`qSb`; pitch ÷ `qSc`; moment-centre shift `M_new = M_old + (r_old − r_new)
+× F` in the same axis system. The legacy code distinguishes CFD model axes
+(x aft, z up) from aircraft body axes (x forward, z down) and flips
+drag/lift signs for presentation — the `CRB25`-style labels do not record
+the actual moment centre used. Do not copy the algebra without sign/
+rotation/translation verification cases (AC-13).
+
 Open: script inputs/invocation, required solver artefacts, ADF schema and
-compatibility with existing consumers, axis/sign and normalization
+compatibility with external consumers, axis/sign and normalization
 conventions, optional-output selection, and treatment of partial sweeps.
-Solver convergence classification is deferred and is not required now.

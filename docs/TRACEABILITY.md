@@ -1,10 +1,13 @@
 # Traceability — REQUISITOS RP-* ↔ v2 requirement IDs
 
-> **Status:** Living. The RP-* IDs are the legacy-analysis proposal space
-> (2026-09-18); FR/QA/OP/UX/DC are the v2 requirement IDs. This table is
-> the bidirectional map so neither document has to be read side-by-side
-> with the other. `—` means the RP has no separate FR (covered by a spec
-> or future workshop deliverable).
+> **Status:** Living. The RP-* and AC-* IDs are defined in the frozen
+> analysis record
+> ([workshops/20260918-requisitos-legacy-analysis.md](<workshops/20260918-requisitos-legacy-analysis.md>),
+> §5/§12.1); their **status is tracked here**. FR/QA/OP/UX/DC are the v2
+> requirement IDs in `REQUIREMENTS.md`. This table is the bidirectional
+> map so neither document has to be read side-by-side with the other.
+> `-` means the RP has no separate FR (covered by a spec or future
+> workshop deliverable).
 
 | RP (REQUISITOS §5) | v2 IDs | Notes |
 |--------------------|--------|-------|
