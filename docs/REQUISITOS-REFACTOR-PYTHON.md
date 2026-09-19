@@ -254,8 +254,8 @@ Para preservar decisões anteriores, os exemplos mantêm `geometry.reference` e 
 
 ### 6.2 Exemplos completos de estrutura
 
-- [POLAR 0002 — sweep de alpha e malha ANSA](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/examples/json-interface-draft/polar-0002.json>).
-- [POLAR 0003 — sweep de beta a partir do ponto salvo](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/examples/json-interface-draft/polar-0003.json>).
+- [POLAR 0002 — sweep de alpha e malha ANSA](<examples/json-interface-draft/polar-0002.json>).
+- [POLAR 0003 — sweep de beta a partir do ponto salvo](<examples/json-interface-draft/polar-0003.json>).
 
 Esses arquivos são JSON sintaticamente válido, sem comentários ou reticências. Representam as polares legadas 002/003 com a identidade de quatro dígitos já definida nos requisitos. Os valores de referência física vêm do REF-001. Os caminhos `assets/*`, a receita numérica nomeada e os parâmetros ilustrativos de meshing precisam ser associados a arquivos/perfis reais antes de qualquer execução. **Não são uma conversão fiel do template numerado 1, que não foi entregue.** Não existe ainda um JSON Schema implementado que os homologue.
 
@@ -497,18 +497,18 @@ Referências a funções/trechos permitem revisar as conclusões sem executar o 
 
 | Fonte | Arquivo e trechos relevantes |
 |---|---|
-| S01 | [bin/jamal.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/bin/jamal.py>) — CLI, modos de job e laço principal de processamento. |
-| S02 | [simulation_case.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/app/core/simulation_case.py>), [jamal.yml](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/etc/jamal.yml>), [transformers.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/app/utils/transformers.py>) e [postvalidators.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/app/utils/postvalidators.py>) — leitura, modos, validação e listas. |
-| S03 | [workaround_to_shell.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/app/core/workaround_to_shell.py>) — `_process_run_flags`, `_send_to_bash`, `_prepare_bash_environment`. |
-| S04 | [mesh_processor.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/app/core/mesh_processor.py>) — `prepare_yaml_config` (~276), execução (~357), validação do log (~449–524) e workflow. |
-| S05 | [jamal.sh](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/bin/jamal.sh>) — REF/SET (~471–604), origem salva (~633–675), física (~959–1045), zonas/BCs (~1146–1441), UDF/sweeps (~1449–1768), submissão (~1796–1893). |
-| S06 | [utils.sh](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/lib/utils.sh>) — atmosfera (~349–510), substituição Fluent (~554), UDF (~869), `write_jou_flow_conditions` (~1016), `read_case_data_jou` (~1236), `set_flow_cond_sequence` (~1277), monitor (~1572). |
-| S07 | [ansamesh_script.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/bin/ansamesh_script.py>) — `yaml_to_json`, `auto_config` (~127), `auto` e exportação Fluent (~2522–2537). |
-| S08 | [posproc.sh](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/bin/posproc.sh>) — rotações (~23–193), seleção de produtos (~239), leitura de metadados, ADF (~543–937) e integrações opcionais posteriores. |
-| S09 | [coef_driver.c](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/00-SUPPORT/coef_driver.c>) e [class_Probes.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/utils/class_Probes.py>) — controle de coeficientes/ângulos e iterações adicionadas em `_write_output` (~538). |
-| S10 | [matrixpy](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/matrixpy>) e [jamal_matrix.jpeg](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/jamal_matrix.jpeg>) — exemplos CARM, referências de origem e configurações. |
-| S11 | [REF-001](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/00-SUPPORT/REF-001>), [SET-050](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/00-SUPPORT/SET-050>) e [SET-055](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/00-SUPPORT/SET-055>) — referências, controles/propulsor e receitas numéricas. |
-| S12 | [ansa_config_template.yaml](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config_template.yaml>), [ansa_config.yaml](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config.yaml>) e [CARM.ansa.meshlog](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/01-GRIDS/Fluent_Meters_CARM/CARM.ansa.meshlog>) — contrato de malha fornecido e metadados de exemplo. |
-| S13 | [prep_drag_rise.sh](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_Struct_Folders/00-SUPPORT/prep_drag_rise.sh>) — consumidor de ADF; [test_cases.py](<C:/Users/User/Documents/ChatGPT/JAMAL 2/JAMAL_shell/tests/integration/test_cases.py>) e fixtures adjacentes — cenários de caracterização do legado. |
-| S14 | [DECISIONS.md](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/DECISIONS.md>), [REQUIREMENTS.md](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUIREMENTS.md>), [SPECS.md](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/SPECS.md>) e workshops — decisões anteriores e contratos ainda em revisão. |
+| S01 | [bin/jamal.py](<../JAMAL_shell/bin/jamal.py>) — CLI, modos de job e laço principal de processamento. |
+| S02 | [simulation_case.py](<../JAMAL_shell/app/core/simulation_case.py>), [jamal.yml](<../JAMAL_shell/etc/jamal.yml>), [transformers.py](<../JAMAL_shell/app/utils/transformers.py>) e [postvalidators.py](<../JAMAL_shell/app/utils/postvalidators.py>) — leitura, modos, validação e listas. |
+| S03 | [workaround_to_shell.py](<../JAMAL_shell/app/core/workaround_to_shell.py>) — `_process_run_flags`, `_send_to_bash`, `_prepare_bash_environment`. |
+| S04 | [mesh_processor.py](<../JAMAL_shell/app/core/mesh_processor.py>) — `prepare_yaml_config` (~276), execução (~357), validação do log (~449–524) e workflow. |
+| S05 | [jamal.sh](<../JAMAL_shell/bin/jamal.sh>) — REF/SET (~471–604), origem salva (~633–675), física (~959–1045), zonas/BCs (~1146–1441), UDF/sweeps (~1449–1768), submissão (~1796–1893). |
+| S06 | [utils.sh](<../JAMAL_shell/lib/utils.sh>) — atmosfera (~349–510), substituição Fluent (~554), UDF (~869), `write_jou_flow_conditions` (~1016), `read_case_data_jou` (~1236), `set_flow_cond_sequence` (~1277), monitor (~1572). |
+| S07 | [ansamesh_script.py](<../JAMAL_shell/bin/ansamesh_script.py>) — `yaml_to_json`, `auto_config` (~127), `auto` e exportação Fluent (~2522–2537). |
+| S08 | [posproc.sh](<../JAMAL_shell/bin/posproc.sh>) — rotações (~23–193), seleção de produtos (~239), leitura de metadados, ADF (~543–937) e integrações opcionais posteriores. |
+| S09 | [coef_driver.c](<../JAMAL_Struct_Folders/00-SUPPORT/coef_driver.c>) e [class_Probes.py](<../JAMAL_shell/utils/class_Probes.py>) — controle de coeficientes/ângulos e iterações adicionadas em `_write_output` (~538). |
+| S10 | [matrixpy](<../JAMAL_Struct_Folders/matrixpy>) — exemplos CARM, referências de origem e configurações. |
+| S11 | [REF-001](<../JAMAL_Struct_Folders/00-SUPPORT/REF-001>), [SET-050](<../JAMAL_Struct_Folders/00-SUPPORT/SET-050>) e [SET-055](<../JAMAL_Struct_Folders/00-SUPPORT/SET-055>) — referências, controles/propulsor e receitas numéricas. |
+| S12 | [ansa_config_template.yaml](<../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config_template.yaml>), [ansa_config.yaml](<../JAMAL_Struct_Folders/01-GRIDS/ANSA/ansa_config.yaml>) e [CARM.ansa.meshlog](<../JAMAL_Struct_Folders/01-GRIDS/Fluent_Meters_CARM/CARM.ansa.meshlog>) — contrato de malha fornecido e metadados de exemplo. |
+| S13 | [prep_drag_rise.sh](<../JAMAL_Struct_Folders/00-SUPPORT/prep_drag_rise.sh>) — consumidor de ADF; testes de integração do legado removidos deste repositório (classificação apenas; não são homologação física). |
+| S14 | [DECISIONS.md](<DECISIONS.md>), [REQUIREMENTS.md](<REQUIREMENTS.md>), [SPECS.md](<SPECS.md>) e workshops — decisões anteriores e contratos ainda em revisão. |
 

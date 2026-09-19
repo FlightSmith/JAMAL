@@ -26,7 +26,7 @@ foi promovida à emenda da ADR-0008, FR-033 e SPECS §6.2.
 
 ## Documento produzido
 
-[Requisitos para o refactor completo em Python](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>)
+[Requisitos para o refactor completo em Python](<../REQUISITOS-REFACTOR-PYTHON.md>)
 descreve fluxo e dependências, 64 requisitos propostos, 20 cenários de
 aceite, arquitetura e contratos propostos, limites do script ANSA retido,
 ADF, problemas que não devem ser copiados e decisões pendentes.

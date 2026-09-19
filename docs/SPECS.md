@@ -11,6 +11,15 @@
 
 > **Status:** Workshop → first implementation target (ADR-0006/0007).
 > Backend boundary accepted; exact JSON schema not yet frozen.
+>
+> **Encoding (owner, 2026-09-19):** YAML and JSON are **interchangeable
+> encodings** of the same case model — either is accepted as input because
+> YAML supports comments and reads better by eye; JSON remains the
+> canonical machine boundary (schema, examples, resolved artefacts).
+> The schema is encoding-agnostic; one schema version per case-file
+> format. Reference examples are kept in JSON:
+> [polar-0002.json](<examples/json-interface-draft/polar-0002.json>),
+> [polar-0003.json](<examples/json-interface-draft/polar-0003.json>).
 
 ## Decisions taken
 
@@ -154,38 +163,31 @@ geometry:
 
 # 2. Equations & physics
 
-> **Status:** Draft — normative once constants are accepted. All quantities
-> SI unless noted. v01 bugs are not the spec.
-
-> **Review hold (2026-09-18):** static analysis of the supplied shell revealed
-> an unresolved pressure-altitude versus geometric-altitude/ISA-deviation
-> interpretation. See D01 in the
-> [legacy-grounded requirements](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>).
-> These equations must not be used as an approved physical oracle until
-> the convention and reference values are accepted.
+> **Status:** Normative (ADR-0009, 2026-09-19 — closes D01). All quantities
+> SI unless noted. v01 bugs are not the spec; the legacy shell's
+> pressure-altitude / pressure-at-ISAD=0 convention is not reproduced.
 
 ## 2.1 Constants (single source of truth — DC-007)
 
 One Python module defines these. No other file may invent values.
 
-| Symbol | Proposed value | Unit | Description |
-|--------|----------------|------|-------------|
+| Symbol | Value | Unit | Description |
+|--------|-------|------|-------------|
 | γ | 1.4 | — | Ratio of specific heats |
-| R | 287.053 | J/(kg·K) | Specific gas constant, dry air |
+| R | 287.053 | J/(kg·K) | Specific gas constant, dry air (CIPM/ISO; 287.05287 is the same constant rounded) |
 | g | 9.80665 | m/s² | Standard gravity |
 | p₀ | 101325 | Pa | ISA sea-level pressure |
 | T₀ | 288.15 | K | ISA sea-level temperature |
 | h₁₁ | 11000 | m | Tropopause |
-| p₁₁ | 22632.04 | Pa | ISA tropopause pressure |
+| p₁₁ | 22632.04 | Pa | ISA tropopause pressure (accepted, ADR-0009) |
 | T₁₁ | 216.65 | K | ISA tropopause temperature |
 | L | −0.0065 | K/m | Tropospheric lapse rate |
 | μ_ref | 1.716×10⁻⁵ | Pa·s | Sutherland reference viscosity |
 | T_ref | 273.11 | K | Sutherland reference temperature |
 | S | 110.56 | K | Sutherland constant |
 
-> REVIEW: confirm R (287.053 vs ISO 287.05287) and p₁₁ vs hydrostatic
-> integration of (p₀, T₀, L). Fluent `sutherland three-coefficient-method`
-> is generated from the same numbers.
+> The earlier REVIEW on R and p₁₁ is resolved by ADR-0009. Fluent
+> `sutherland three-coefficient-method` is generated from the same numbers.
 
 ## 2.2 Temperature
 
@@ -251,8 +253,10 @@ ey = −sin(β)
 ez =  cos(β)·sin(α)
 ~~~
 
-> REVIEW: confirm e_y sign against Fluent pressure-far-field and the
-> aircraft axis convention.
+> REVIEW: ~~confirm e_y sign~~ **Resolved (2026-09-19):** e_y = −sin(β)
+> confirmed against the legacy implementation (`unit_vector_comp` in
+> [utils.sh](<../JAMAL_shell/lib/utils.sh>)) and Fluent pressure-far-field
+> convention.
 
 ## 2.9 Acceptances
 
@@ -268,9 +272,12 @@ ez =  cos(β)·sin(α)
 
 # 3. Mesh metadata (JSON)
 
-> **Status:** Draft 1.0.0 — parser-normative. Full field-by-field text
-> lives in git history (`docs/specs/MESH-METADATA-SPEC.md`); carried here:
-> the contract.
+> **Status:** Draft 1.0.0 — parser-normative. Producer for the current
+> phase: isolated meshlog-parser adapter behind the `MeshMetadataSource`
+> port (ADR-0010); the rewritten ANSA script will replace it with a
+> structured file later, without changing this contract. Full
+> field-by-field text lives in git history
+> (`docs/specs/MESH-METADATA-SPEC.md`); carried here: the contract.
 
 - ANSA batch produces a process log (ignored) and a **mesh metadata JSON**
   (parsed). JAMAL v2 never scrapes the log.
@@ -315,27 +322,48 @@ module/executable/version), `paths` (mesh_cache_root, udf sources),
 
 # 6. Solver input (Fluent journal + injection)
 
-> **Status:** Behaviour in §6.1/§6.2 accepted (ADR-0008); exact journal,
-> injection and saved-solution contracts remain Workshop (W3).
-> SET is not required as an input (ADR-0003).
+> **Status:** Behaviour in §6.1/§6.2 accepted (ADR-0008, ADR-0012); journal
+> numerics profiles accepted (ADR-0011); exact injection and saved-solution
+> contracts remain Workshop (W3). SET is not required as an input
+> (ADR-0003).
 
 Product obligations: complete journal, no leftover placeholders; swept
 Mach/α/β → sequential operating points in **one** journal; injection
 (snippets at hook points, override map, extra files) **and suppression of
 generated commands** (workshop 20260902); UDF `.c` templates updated to
 generate a `.c` with the correct values only when the corresponding mode
-is active; Sutherland in journal = ISA module;
-fan/core BC groups with JSON-validated arity; symmetry halves Sref.
+is active; Sutherland in journal = ISA module; fan/core BC groups with
+JSON-validated arity; symmetry halves Sref.
 
-Generated UDF sources are case-specific files populated from existing
-templates. Keep template inputs unchanged; emit compilation/loading hooks
-only for the corresponding active modes.
+## 6.0 Numerics profiles (ADR-0011)
+
+The case file declares the solver family and profile explicitly; the
+backend selects or auto-creates the numeric block from **versioned
+templates**. Seeded catalogue (derived from the delivered SET pair):
+
+| Profile | Source | Family | Defining lines |
+|---------|--------|--------|----------------|
+| `fluent_density_based_v1` | SET-050 | density-based implicit | `/solve/set/flux-type 0`; gradient `no no`; AMG-C `1`; solution steering `subsonic`; divergence-prevention `enable 0.1` |
+| `fluent_pressure_based_v1` | SET-055 | pressure-based | `/solve/set/flux-type yes`; gradient `no yes`; high-order term relaxation `enable yes`; pseudo-time-method global time step `no 10` |
+
+Rules: `solver.numerics.profile` names a catalogue entry (site config may
+register more); unknown name → fail screaming. Turbulence model (SA / SST /
+EULER) is orthogonal to the profile. Journals generated from each profile
+are golden-test artefacts (QA-004 bit-stable).
 
 ## 6.1 Sweep execution and iterations
 
 Run a sweep in one Fluent session. Within each branch, changing alpha or
 beta updates the far-field velocity direction; the next point continues
 from the current solution without closing Fluent or reinitializing.
+
+**General policy (ADR-0012):** sweep ordering and branching replicate the
+legacy planner semantics as the parity baseline — zero-seeded two-branch
+pattern for any alpha/beta sweep crossing zero; single branch starting at
+the end closest to zero for one-sided ranges; COLD = one journal per point,
+independent initialization; Mach sweeps nest alpha/beta per matrix
+semantics; per-angle grids emit one journal per grid without angle
+components in the far-field command. See ADR-0012 for the full shape list.
 
 Confirmed example, alpha -10 to +20 degrees in steps of 1:
 
@@ -355,9 +383,8 @@ that the flow solution has physically converged. Tool failures remain
 errors under QA-001. Numerical closure checks for flow-condition inversion
 in §2 are separate and remain required.
 
-Open: ordering/initialization for one-sided sweeps, explicit point lists,
-negative beta branches, Mach sweeps, and ranges that omit zero; exact
-iteration fields and how legacy KNITERS maps to them.
+Open: explicit point lists; ordering when a source-point replaces the
+near-zero seed; exact iteration fields and how legacy KNITERS maps to them.
 
 ## 6.2 Starting a dependent polar from a saved solution
 
@@ -382,6 +409,10 @@ file write must not be treated as an available solution.
 This is initialization of a new polar from a saved point. Continuing the
 iterations of an interrupted point is a separate deferred feature, while
 stage-level resume remains required by ADR-0002.
+
+Generated UDF sources are case-specific files populated from existing
+templates. Keep template inputs unchanged; emit compilation/loading hooks
+only for the corresponding active modes.
 
 ## 6.3 Remaining journal contract
 

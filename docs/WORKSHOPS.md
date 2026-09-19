@@ -16,7 +16,7 @@ solution without new iterations; POLAR 003 calculates beta 1…15 after
 reusing beta 0. Promoted to the ADR-0008 amendment and FR-033.
 
 **Deliverable:**
-[Requisitos para o refactor completo em Python](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>),
+[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>),
 with traceable requirements, acceptance scenarios, draft JSON examples and
 explicit conflicts with earlier atmosphere/metadata drafts. Proposed
 contracts are not automatically promoted to accepted ADRs.
@@ -44,7 +44,8 @@ contracts are not automatically promoted to accepted ADRs.
 6. Populate existing UDF `.c` templates. Invoke a dedicated post-processing
    script for ADF production; figures, Cp and load distributions are optional.
 
-**Record:** `workshops/20260918.md`; reference example: `jamal_matrix.jpeg`.
+**Record:** `workshops/20260918.md`; reference example: the real matrix file
+[matrixpy](<../JAMAL_Struct_Folders/matrixpy>).
 Exact schemas, tool invocation and source readiness contracts remain open.
 
 ---

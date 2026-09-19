@@ -3,7 +3,7 @@
 > **Status:** Living. Read in this order.
 
 **New starting point for the current review (2026-09-18):**
-[Requisitos para o refactor completo em Python](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>)
+[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>)
 documents the supplied shell/Python pipeline, its file contracts, 64 proposed
 requirements, acceptance scenarios and readable JSON examples. It separates
 confirmed decisions from observed behaviour and proposals. Physics and ANSA
@@ -13,14 +13,19 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
 | File | Question it answers |
 |------|---------------------|
 | `SCOPE.md` | Why, for whom, in/out, constraints |
-| `DECISIONS.md` | Accepted decisions (ADR-0001…0008) — newest amendments take precedence |
+| `DECISIONS.md` | Accepted decisions (ADR-0001…0012) — newest amendments take precedence |
 | `REQUIREMENTS.md` | What the system shall do (testable, prioritised) |
+| `TRACEABILITY.md` | Map between REQUISITOS RP-* IDs and FR/QA/OP/UX/DC IDs |
 | `SPECS.md` | Contracts and open details: JSON interface, equations, mesh metadata, config, solver input, post-processing |
+| `LEGACY-SWEEP-INVENTORY.md` | Legacy sweep shapes: the ADR-0012 parity checklist |
 | `WORKSHOPS.md` | Workshop outcomes + agendas for open specs |
 | `OPEN-QUESTIONS.md` | Unsettled decisions + v01 pain we refuse to reintroduce |
 | `GLOSSARY.md` | Shared domain vocabulary |
-| `workshops/` | Meeting/brainstorm records, append-only (see AGENTS.md) |
-| `changelog/` | One summary per requested change (see AGENTS.md) |
+| `CONTRIBUTING.md` | How to propose changes; document hierarchy; PR/commit rules |
+| `templates/ADR.md` | Copy-paste skeleton for a new ADR |
+| `ANALYSIS-2026-09-19.md` | Full codebase read: findings, weak points, progress log |
+| `workshops/` | Meeting/brainstorm records, append-only (see CONTRIBUTING.md) |
+| `changelog/` | One summary per requested change (see CONTRIBUTING.md) |
 
 ## Rules
 
@@ -41,20 +46,36 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
   branches, full iterations per computed point, and dependencies on saved source
   operating points. A saved first point is reused with no new iterations, as
   confirmed during shell analysis. Solver convergence checking is deferred.
-- Equations (SPECS §2) and mesh metadata (SPECS §3) remain drafts;
-  physical conventions and existing-script compatibility need review.
+- **ADR-0009 fixes atmosphere semantics:** geometric altitude, ISAD applied
+  in every thermodynamic quantity; SPECS §2 is normative.
+- **ADR-0010 fixes the mesh-metadata producer:** isolated meshlog parser
+  behind a port; domain code never reads logs; swappable when the ANSA
+  script is rewritten.
+- **ADR-0011 seeds the numerics catalogue:** density-based
+  (`fluent_density_based_v1`, from SET-050) and pressure-based
+  (`fluent_pressure_based_v1`, from SET-055) profiles; the case file names
+  the profile; journals are template-derived.
+- **ADR-0012 sets the sweep parity baseline:** legacy branch semantics
+  (zero-seeded branches, one-sided ranges, COLD per-point journals, Mach
+  nesting, per-angle grids).
+- Case input accepts **YAML or JSON interchangeably** (owner decision,
+  2026-09-19); one schema, two encodings. Reference examples:
+  [polar-0002.json](<examples/json-interface-draft/polar-0002.json>),
+  [polar-0003.json](<examples/json-interface-draft/polar-0003.json>).
+- Atmosphere equations (SPECS §2) are **normative** (ADR-0009); mesh
+  metadata contract (SPECS §3) is normative with a swappable producer
+  (ADR-0010).
 - W1 (case-file schema) is the first implementation target.
 
 ## History
 
-This branch (`refactor/rebuild`) previously held the full 26-file doc-set
-(separate specs, ADRs, engineering standard, operations handbook, manifest,
-rationale). It was consolidated into the six files above; the full text is
-in git history (commit 53e5080 and earlier on this branch, plus the
-v01-evolved code on `main`).
-
-## Legacy note
-
-The v01-evolved Python code on `main` (`app/`, `bin/`, `tests/`) is
-**frozen as reference** for the v2 rebuild. New v2 code starts clean once
-W1 accepts the case-file schema.
+This repository is the rebuilt home of the JAMAL v2 effort. The earlier
+26-file doc-set (separate specs, ADRs, engineering standard, operations
+handbook, manifest, rationale) was consolidated into the six core files
+above; its full text lives in the git history of the previous
+`refactor/rebuild` branch. The legacy v01 toolchain and the hybrid
+Python/bash refactor are preserved under `JAMAL_shell/` and
+`JAMAL_Struct_Folders/` as **frozen reference** — new v2 code starts
+clean once W1 accepts the case-file schema. Legacy unit/integration
+tests were removed from the package (several broken); recover them from
+the owner's delivery archive if classification material is needed.

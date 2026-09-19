@@ -4,16 +4,20 @@
 > (historical defects and where they are closed; do not reopen without an ADR).
 
 The supplied implementation has now been analysed in
-[Requisitos para o refactor completo em Python](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>).
+[Requisitos para o refactor completo em Python](<REQUISITOS-REFACTOR-PYTHON.md>).
 Its D01–D08 group the remaining contracts and missing integration materials.
-In particular, D01 requires clarifying altitude/ISA semantics before using
-the historical pressure/temperature defect labels below as a physical oracle.
+**Status update (2026-09-19):** D01 closed by ADR-0009, D02 closed by
+ADR-0010, D03 direction set by ADR-0012 (legacy sweep semantics), and the
+journal recipe catalogue seeded by ADR-0011. Remaining: D04, D05, D06, D07,
+D08 (inputs).
 
 ---
 
 ## JSON backend interface (ADR-0007)
 
 - [ ] Case-file schema per section (W1 — first implementation target)
+- [x] Input encoding: YAML and JSON interchangeable (owner, 2026-09-19);
+      one schema, two encodings. SPECS §1 updated.
 - [ ] Resolved ISA values inside the case file vs pointer to a
       flow-conditions artefact
 - [ ] Case-file naming convention (`{polar}.json` vs per-polar directory)
@@ -21,6 +25,14 @@ the historical pressure/temperature defect labels below as a physical oracle.
 - [x] Frontend/backend boundary: JSON; matrix/REF parsing is later frontend
       work. Existing YAML remains at the ANSA interface (ADR-0007).
 - [ ] Campaign default unit if every value is suffixed anyway
+
+- [x] Atmosphere acceptance reference, ISA-deviation pressure behaviour,
+      geometric-altitude conventions → **closed by ADR-0009** (geometric
+      altitude; ISAD in all quantities; golden values vs US Std Atmosphere
+      1976). Coefficient axes/signs remain open under D05.
+- [ ] Mesh metadata: ~~D02 producer conflict~~ closed by ADR-0010
+      (isolated meshlog-parser adapter, swappable). Remaining: golden
+      metadata sample for the parser tests.
 
 ## Product / ops
 
@@ -52,9 +64,10 @@ the historical pressure/temperature defect labels below as a physical oracle.
 - [ ] Source-point identity, solution-file completeness/readiness, compatibility
       checks, dependency cycles, unavailable/failed sources and prior-campaign
       sources; source polar completion is not the readiness condition.
-- [ ] Sweep rules beyond the confirmed zero/positive/reload-zero/negative
-      alpha example: one-sided ranges, lists, negative beta, Mach and no-zero
-      ranges. Do not invent additional zero points without a decision.
+- [x] Sweep rules beyond the confirmed alpha example → direction closed by
+      ADR-0012: legacy branch semantics are the parity baseline (zero-seeded
+      branches, one-sided ranges, COLD, Mach nesting, per-angle grids).
+      Residual: exact list-input syntax at W1.
 - [ ] Existing ANSA YAML schema/invocation and metadata availability under
       the decision to keep the script unchanged.
 - [ ] Proposed `01-GRIDS` scope/layout versus accepted shared cache and work
@@ -84,6 +97,11 @@ the historical pressure/temperature defect labels below as a physical oracle.
   post-processing with optional figures/distributions — ADR-0007
 - Zero-seeded positive/negative alpha branches, full iterations at every
   point, saved-source-point dependencies — ADR-0008
+- Geometric altitude + ISAD everywhere; SPECS §2 normative — ADR-0009
+- Isolated meshlog parser as interim metadata producer — ADR-0010
+- Numerics profile catalogue (density/pressure based, from SET-050/055) — ADR-0011
+- Legacy sweep semantics as parity baseline — ADR-0012
+- YAML/JSON interchangeable case input — owner decision 2026-09-19 (SPECS §1)
 - POL with suffix
 - Unit suffixes in inputs
 - Fluent this year

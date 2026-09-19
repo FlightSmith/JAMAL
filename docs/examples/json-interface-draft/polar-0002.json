@@ -109,7 +109,8 @@
     "dimension": "3d",
     "precision": "double",
     "numerics": {
-      "profile": "density_based_implicit_steady_v1",
+      "profile": "fluent_density_based_v1",
+      "solver_family": "density_based",
       "turbulence_model": "spalart_allmaras"
     },
     "boundary_groups": {

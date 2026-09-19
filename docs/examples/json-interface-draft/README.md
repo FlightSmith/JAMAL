@@ -1,6 +1,6 @@
 # Exemplos propostos de interface JSON
 
-Estes arquivos acompanham [os requisitos do refactor](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>). São exemplos de estrutura para revisão, não inputs homologados nem uma implementação do schema.
+Estes arquivos acompanham [os requisitos do refactor](<../../REQUISITOS-REFACTOR-PYTHON.md>). São exemplos de estrutura para revisão, não inputs homologados nem uma implementação do schema.
 
 - `polar-0002.json`: sweep de α, geração de malha e sequência 0, positivos, reload de 0, negativos.
 - `polar-0003.json`: herda malha e solução de α=0°, β=0° da 0002, reutiliza esse ponto sem iterar e calcula β=1°…15°.

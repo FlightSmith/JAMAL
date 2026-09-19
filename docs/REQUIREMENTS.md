@@ -2,15 +2,15 @@
 
 > **Status:** Draft shalls. Syntax of inputs is defined in `SPECS.md`, not here.
 > Every requirement: **ID, Priority (Must/Should), Statement, Spec, Verify**.
-> Backend boundary and sweep behaviour updated by ADR-0007/0008.
+> Backend boundary and sweep behaviour updated by ADR-0007/0008. Atmosphere
+> semantics fixed by ADR-0009; mesh-metadata producer by ADR-0010; numerics
+> profiles by ADR-0011; sweep parity baseline by ADR-0012.
 
 > **Legacy-analysis review (2026-09-18):** the new
-> [Python refactor requirements](<C:/Users/User/Documents/ChatGPT/JAMAL 2/docs/REQUISITOS-REFACTOR-PYTHON.md>)
-> expand coverage from the supplied implementation. Its D01/D02 identify
-> unresolved conflicts affecting the atmosphere interpretation below and
-> the no-log-scraping requirements while retaining the ANSA script.
-> Resolve those contracts before treating their current draft equations
-> or metadata producer as implementation-ready.
+> [Python refactor requirements](<REQUISITOS-REFACTOR-PYTHON.md>)
+> expand coverage from the supplied implementation. Its D01/D02 identified
+> the atmosphere and metadata conflicts — both now closed by ADR-0009 and
+> ADR-0010. D03 direction is set by ADR-0012 (legacy sweep semantics).
 
 ---
 
@@ -45,24 +45,24 @@
 
 | ID | Pri | Statement | Spec | Verify |
 |----|-----|-----------|------|--------|
-| FR-016 | Must | The system shall obtain a volume mesh for a case or reuse a mesh **proven valid** for that case's geometry and mesh parameters. | SPECS §3, ADR-0001 | Missing/invalid metadata → case fails; no log scraping |
+| FR-016 | Must | The system shall obtain a volume mesh for a case or reuse a mesh **proven valid** for that case's geometry and mesh parameters. | SPECS §3, ADR-0001, ADR-0010 | Missing/invalid metadata → case fails; no log scraping in domain code (isolated parser adapter allowed per ADR-0010) |
 | FR-017 | Must | Cases sharing geometry and mesh parameters shall share **one** mesh artefact, referenced by symlink. | ADR-0001 | Two flow conditions, one mesh inode |
 | FR-018 | Must | When mesh generation is required, the backend shall adapt JSON meshing parameters and geometry references to the existing YAML interface and invoke the current ANSA script with LMOD; that script continues to handle transformations and morphing. | SPECS §8, ADR-0007 | YAML reflects JSON inputs; existing ANSA script invoked; module load isolated |
-| FR-019 | Must | Mesh success shall be decided only from the mesh-metadata file plus `mesh_path` existence. | SPECS §3 | Raw `.log` as metadata → hard fail |
+| FR-019 | Must | Mesh success shall be decided only from the mesh-metadata contract (SPECS §3) plus `mesh_path` existence. In the current phase the metadata is produced by the isolated meshlog-parser adapter (ADR-0010); domain code never reads the log. | SPECS §3, ADR-0010 | Raw `.log` consumed outside the parser adapter → hard fail |
 | FR-020 | Must | The system shall build a deterministic, human-readable mesh configuration name from case parameters. | SPECS §1 | Same inputs → same name |
 
 ### Solver input
 
 | ID | Pri | Statement | Spec | Verify |
 |----|-----|-----------|------|--------|
-| FR-021 | Must | The system shall emit a complete, valid Fluent journal for each case; leftover unsubstituted placeholders are a hard failure. | SPECS §6 | Token audit; golden excerpts |
+| FR-021 | Must | The system shall emit a complete, valid Fluent journal for each case, from the numerics profile named in the case file (ADR-0011 catalogue); leftover unsubstituted placeholders are a hard failure. | SPECS §6, ADR-0011 | Token audit; golden excerpts for both seeded profiles |
 | FR-022 | Must | The journal shall execute the operating points of a sweep in one Fluent session, continuing from the current solution within each branch and updating the applicable flow conditions between points. | SPECS §6 | One session; alpha/beta changes update far-field direction without reinitializing within a branch |
 | FR-023 | Must | The operator shall be able to **inject** extra solver input (snippets at hook points, overrides, extra files) and **suppress** generated commands. Injection is explicit and versioned with the case. | ADR-0003 + amendment, SPECS §6 | Injected block appears; suppression removes target; missing path → fail screaming |
 | FR-024 | Must | For active CL-driver, CY-driver or MFR modes, the backend shall populate existing UDF `.c` templates with case-specific values in the isolated case workspace and emit the required compilation/loading hooks. No UDF generation or compile hook is required when these modes are inactive. | SPECS §6, ADR-0007 | Values match the case; no unresolved placeholders; shared templates unchanged; hooks match active mode |
 | FR-025 | Must | If a symmetry boundary exists (named in configuration/mesh metadata), the reference area used for coefficients shall be halved. | SPECS §3 | Sref_used = Sref/2 |
 | FR-026 | Must | The system shall support fan inlet (mass-flow), fan outlet, and core-exhaust BC groups with arities validated against the definitions supplied in JSON. | SPECS §1, §6 | Group arity validated |
 | FR-027 | Must | Fluent material viscosity shall be generated from the same Sutherland constants as the ISA module. | SPECS §2, DC-007 | Constants equal in journal and module |
-| FR-030 | Must | For the confirmed alpha sweep spanning zero, the journal shall solve and save zero, execute the positive branch away from zero, reload the saved zero solution, then execute the negative branch away from zero, within the same Fluent session. | SPECS §6.1, ADR-0008 | -10 to +20 by 1 executes 0, +1…+20, reload 0, -1…-10; zero is not solved again at the reload |
+| FR-030 | Must | For alpha sweeps spanning zero, the journal shall solve and save the point closest to zero, execute the branch away from zero, reload the saved near-zero solution, then execute the opposite branch away from it, within the same Fluent session (ADR-0012 legacy semantics; the confirmed -10…+20 example is a special case). | SPECS §6.1, ADR-0008, ADR-0012 | -10 to +20 by 1 executes 0, +1…+20, reload 0, -1…-10; zero is not solved again at the reload |
 | FR-031 | Must | Each computed operating point shall run its full specified iteration count. Solver convergence checks shall neither advance a point early nor gate the remaining sweep in the current phase. A reused first point follows FR-033. | SPECS §6.1, ADR-0008 | Each computed point emits its requested iteration count; no convergence-based branch or early stop |
 | FR-032 | Must | The backend shall support starting a polar from another polar's saved operating-point mesh and solution, waiting for that source point to become available without requiring the whole source polar to finish. | SPECS §6.2, ADR-0008 | POLAR 003 waits for POLAR 002 alpha 0, loads its saved solution, and does not generate a new grid |
 | FR-033 | Must | A first point supplied by another polar's saved solution shall be reused without new iterations, retaining its results and source provenance. | SPECS §6.2, ADR-0008 amendment | POLAR 003 reuses beta 0 and calculates beta 1…15: 16 result points, 15 newly computed |
@@ -156,7 +156,7 @@
 | WONT-001 | SU2 journals or submission. |
 | WONT-002 | GUI. |
 | WONT-003 | Author new UDF algorithms/C source from scratch; populating existing `.c` templates is required by FR-024. |
-| WONT-004 | Scrape ANSA process logs for mesh facts. |
+| WONT-004 | Scrape ANSA process logs **inside domain code**. The isolated meshlog-parser adapter (ADR-0010) is the single permitted interim metadata producer until the rewritten ANSA script emits structured metadata. |
 | WONT-005 | Non-ISA atmospheres. |
 | WONT-006 | Byte-compatible v01 matrix/SET/REF. |
 | WONT-007 | Campaign matrix table (deferred — future layer per ADR-0006). |

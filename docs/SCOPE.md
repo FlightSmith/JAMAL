@@ -38,14 +38,23 @@ without corrupting meshes or results.
 
 ## 4. In scope (v2)
 
+- Case input as **YAML or JSON interchangeably** (one schema, two encodings);
+  JSON remains the canonical machine boundary.
 - JSON case interface + schema-driven validation.
-- ISA atmosphere, Sutherland viscosity, Mach↔velocity, Re↔altitude
-  inversion with closure check.
+- ISA atmosphere (geometric altitude, ISAD in every quantity — ADR-0009),
+  Sutherland viscosity, Mach↔velocity, Re↔altitude inversion with closure
+  check.
 - Mesh obtain/reuse/share via symlink; JSON-to-YAML adaptation for the
   existing ANSA script, which continues handling transformations/morphing.
-- Fluent journal emission with injection (add **and** suppress commands).
-- Sweeps within one Fluent session, with the full specified iterations at
-  each computed point; zero-seeded positive/negative alpha branches per SPECS §6.1.
+- Mesh metadata via an **isolated meshlog-parser adapter** (ADR-0010),
+  swappable for a structured-file producer when the ANSA script is
+  rewritten.
+- Fluent journal emission from **named numerics profiles** (ADR-0011:
+  `fluent_density_based_v1` / `fluent_pressure_based_v1`) with injection
+  (add **and** suppress commands).
+- Sweeps within one Fluent session following the **legacy branch
+  semantics** parity baseline (ADR-0012), with the full specified
+  iterations at each computed point; zero-seeded branches per SPECS §6.1.
 - Starting a dependent polar from a saved source operating point as soon
   as that solution is available, without rebuilding its grid. Reuse that
   first point without new iterations (ADR-0008 amendment).
@@ -63,14 +72,14 @@ without corrupting meshes or results.
 |------|-------|
 | Campaign matrix table | Future layer (ADR-0006); generate-from and derive-to are separate future specs |
 | Frontend / REF parsing | Later phase; backend engineering inputs arrive through JSON (ADR-0007) |
-| Refactoring the ANSA script | Use its current YAML interface and transformation/morphing behaviour for now |
+| Refactoring the ANSA script | Use its current YAML interface and transformation/morphing behaviour for now; when rewritten it emits structured mesh metadata (ADR-0010) |
 | Solver convergence checking | Deferred; every point currently runs its full specified iterations (ADR-0008) |
 | GUI / web interface | — |
 | Mesh quality optimisation | ANSA's job |
 | Non-ISA atmospheres | — |
 | Generating UDF C source from scratch | UDF `.c` files are templates; they are updated during the process to generate a `.c` with the correct values |
 | SU2 behaviour | Won't v2; ports stay |
-| v01 matrix/SET/REF byte-compatibility | Not a goal |
+| v01 matrix/SET/REF byte-compatibility | Not a goal; numerics preserved via ADR-0011 profiles, not byte copies |
 
 ## 6. Spec documents
 
