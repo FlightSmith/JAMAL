@@ -10,7 +10,7 @@ Este documento descreve o funcionamento observado, os requisitos da substituiç�
 
 Foram examinados os pontos de entrada, validação e integração Python de `JAMAL_shell`, os scripts `jamal.sh`, `utils.sh` e `posproc.sh`, o script ANSA, o gerador de probes, o template UDF, os arquivos de suporte e de malha entregues, a matriz textual, a imagem da matriz, os testes e fixtures relevantes e os documentos anteriores em `docs`. A seção 14 identifica as fontes para rastreabilidade.
 
-Não foram executados ANSA, Fluent, PBS ou META. Os arquivos entregues como `CARM.ansa.txt`, `Batch_Scenario_carm.ansa.txt` e `CARM.msh.h5.txt` são os placeholders informados pelo usuário; não demonstram validade de geometria ou de malha. O meshlog fornece evidência do formato histórico, não certifica esses placeholders. O pacote não inclui a implementação de `submit_fluent` nem um ADF de referência completo para homologação.
+Não foram executados ANSA, Fluent, PBS ou META. Os arquivos entregues como `CARM.ansa`, `Batch_Scenario_carm.ansa` e `CARM.msh.h5` são os placeholders informados pelo usuário (o conteúdo é placeholder; os nomes foram corrigidos em 2026-09-19 — o Windows Explorer havia acrescionado `.txt` indevidamente); não demonstram validade de geometria ou de malha. O meshlog fornece evidência do formato histórico, não certifica esses placeholders. O pacote não inclui a implementação de `submit_fluent` nem um ADF de referência completo para homologação.
 
 As classificações utilizadas são:
 
@@ -86,12 +86,12 @@ JAMAL_Struct_Folders/
     prep_drag_rise.sh
   01-GRIDS/
     ANSA/
-      CARM.ansa.txt                       [dummy]
+      CARM.ansa                           [dummy]
       ansa_config_template.yaml
       ansa_config.yaml
-      01-BATCH/Batch_Scenario_carm.ansa.txt [dummy]
+      01-BATCH/Batch_Scenario_carm.ansa    [dummy]
     Fluent_Meters_CARM/
-      CARM.msh.h5.txt                     [dummy]
+      CARM.msh.h5                         [dummy]
       CARM.ansa.meshlog
   02-RUNS/POLAR-*/                        [criado pelo pipeline]
   03-RESULTS/                             [destino dos resultados]
