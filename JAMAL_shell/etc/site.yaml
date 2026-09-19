@@ -1,0 +1,55 @@
+# Site-specific configuration for JAMAL
+# These values override default configuration
+
+# Column mapping between desired column names and matrix file column names
+column_mapping:
+  RUN: "R?"
+  POLAR: "POL"
+  AIRCRAFT: "ACRT"
+  AERODYNAMIC_CONFIGURATION: "AERODYNAMIC_CONFIGURATION"
+  RUDDER: "RUDDER"
+  ELEVON: "ELEVON"
+  AILERON: "AILERON"
+  FLAP: "FLAP"
+  FAN_INLET: "FANINLET"
+  FAN_OUTLET: "FANOULET"
+  CORE_EXHAUST: "COREEXHA"
+  PROPELLER: "PROPELLER"
+  REFERENCE: "REF"
+  SET: "SET"
+  TURBULENCE: "TURB"
+  SOLVER: "SOLVER"
+  START: "START"
+  WALL_TIME: "WTIME"
+  CPU: "CPU"
+  KNITERS: "KNITERS"
+  MACH_VELOCITY: "MACH[VEL]"
+  REYNOLDS_ALT: "REY[ALT]"
+  ISAD: "ISAD"
+  ALPHA_CLS: "ALPHA[CLS]"
+  BETA_CYS: "BETA[CYS]"
+  GRID: "GRID"
+
+# Physical constants
+physical_constants:
+  air_ratio_of_specific_heats: 1.4         # Air ratio of specific heats
+  specific_gas_constant: 287.053         # Specific gas constant [J/(kg.K)]
+  gravitational_acceleration: 9.80665      # Acceleration of gravity [m/s2]
+
+  sea_level_conditions:
+    pressure: 101325.0                    # Air pressure [Pa] at sea level
+    temperature: 288.15                   # Air temperature [K] at sea level
+
+  tropospheric_conditions:
+    tropopause_level: 11000               # Tropopause level [m]
+    tropopause_pressure: 22632.04          # Air pressure [Pa] at h=11000 m
+    tropopause_temperature: 216.65         # Air temperature [K] at h=11000 m
+    temperature_gradient: -0.0065          # Air temperature gradient [K/m]
+
+# Default paths
+paths:
+  support_dir: "00-SUPPORT"
+  grid_dir: "01-GRIDS"
+  runs_dir: "02-RUNS"
+  results_dir: "03-RESULTS"
+  log_dir: "logs"

@@ -1,0 +1,81 @@
+MAX_GEOM_COUNT: 5
+MAX_MORPH_PARAMS: 12
+MAX_TRANS_PARAMS: 12
+ansa_version: 24.1.1
+auto_trim_symm: 0
+basemesh: ''
+basemeshdir: ''
+bdir: ./01-BATCH
+blref: 4.3
+bnumb: 2
+bptch: 16.0
+bscn: batch_scenario_carm_v10.ansa
+end_surf_offset: 2000
+fcond: 0
+fmout: 1
+ftype: RANS
+gdir: ./
+geometry:
+- CARM_v10.ansa
+mirme: 0
+morph:
+  mode: 0
+  params:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+msave: 1
+mtype: 1
+pptch: 0.0
+propx0: 8332.920994
+propy0: -5475.000442
+propz0: 2594.888184
+psaxis: e3
+ptoe: 0.0
+sbox_max_len_surf: 0
+sbox_max_len_vol: 0
+scons: 0
+scout: 0
+sfso_max_len_surf: 0
+sfso_max_len_vol: 0
+surf_offset: 1000
+sweep_distance: 5000
+tcons: 1
+trans:
+  2point_a: 8036.5 0 0 8036.5 1 0
+  2point_b: 16967 -2167 246 16977 -1385 -407
+  2point_c: 16977 1385 -407 16967 2167 246
+  mode: 0
+  params:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  pids_a: B.STK
+  pids_b: V_UPP V_LOW V_TED V_CAP V_CAP-02
+  pids_c: V_UPP-RH V_LOW-RH V_TED-RH V_CAP-RH V_CAP-02-RH
+unout: 1
+wlay: 1.15
+wlref: 1.158
+wrey: 3000000
+wypls: 1.0
+zoneh: "0.0002\t0.0002\t\t0.0002\t\t0.0002\t\t0.0002\t\t\t0.0002"
+zonel: "0.02\t\t0.02\t\t0.02\t\t0.02\t\t0.02\t\t\t0.02"
+zonen: "SLAT_LE\tSLAT_TE\t\tWING_LE\t\tWING_TE\t\tNACELLE_LE\t\tNACELLE_TE"

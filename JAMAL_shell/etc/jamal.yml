@@ -1,0 +1,148 @@
+COLUMN_CONFIG:
+  RUN:
+    validator: positive_integer
+  POL:
+    validator: positive_integer
+  ACRT:
+    validator: string
+  AERODYNAMIC_CONFIGURATION:
+    validator: string
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  RUDDER:
+    validator: comma_separated_numbers
+    expected_length: REF
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  ELEVON:
+    validator: comma_separated_numbers
+    expected_length: REF
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  AILERON:
+    validator: comma_separated_numbers
+    expected_length: REF
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  FLAP:
+    validator: comma_separated_numbers
+    expected_length: REF
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  FANINLET:
+    validator: comma_separated_group_of_numbers
+    expected_length: 2
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  FANOULET:
+    validator: comma_separated_group_of_numbers
+    expected_length: 4
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  COREEXHA:
+    validator: comma_separated_group_of_numbers
+    expected_length: 4
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  PROBES:
+    validator: comma_separated_group_of_numbers
+    expected_length: 4
+    separator: ","
+    transformer:
+      - split_configured_fields
+    list_field: true
+  PROPELLER:
+    validator: comma_separated_group_of_numbers
+    expected_length: REF
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true
+  REF:
+    validator: positive_integer
+  SET:
+    validator: positive_integer
+  TURB:
+    validator: choice
+    allowed_values:
+      - SA
+      - QCR
+      - RC
+      - SST
+      - EULER
+  SOLVER:
+    validator: choice
+    allowed_values:
+      - FLUENT
+      - SU2
+  START:
+    validator: choice
+    allowed_values:
+      - WARM
+      - COLD
+  WTIME:
+    validator: string
+  CPU:
+    validator: positive_integer
+  KNITERS:
+    validator: numeric_range
+    separator: ":,"
+    transformer: split_configured_fields
+    post-validator: positive_values
+    list_field: true
+  MACH_VEL:
+    validator: numeric_range
+    bracketed: true
+    transformer:
+      - bracketed_column
+      - expand_range
+      # - mach_sweep
+    post-validator:
+      - alpha_mach_sweep
+      - beta_mach_sweep
+      - mach_vel
+    list_field: true
+  REY_ALT:
+    validator: float
+    bracketed: true
+    separator: ":,"
+    transformer:
+      - bracketed_column
+      - split_configured_fields
+    list_field: true
+  ISAD:
+    validator: float
+  ALPHA_CLS:
+    validator: numeric_range
+    bracketed: true
+    transformer:
+      - bracketed_column
+      - expand_range
+      # - alpha_cl_sweep
+    post-validator: 
+      - alpha_beta_sweep
+      - alpha_mach_sweep
+    list_field: true
+  BETA_CYS:
+    validator: numeric_range
+    bracketed: true
+    transformer:
+      - bracketed_column
+      - expand_range
+      # - beta_cy_sweep
+    post-validator:
+      - alpha_beta_sweep
+      - beta_mach_sweep
+    list_field: true
+  GRID:
+    validator: string
+    separator: ","
+    transformer: split_configured_fields
+    list_field: true

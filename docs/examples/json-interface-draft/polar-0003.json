@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Proposta de interface: reutiliza alpha=0, beta=0 da POLAR 0002 sem novas iteracoes e calcula beta=1 ate 15. Nao esta homologado para execucao.",
+  "identity": {
+    "campaign_id": "carm-example",
+    "polar": "0003"
+  },
+  "enabled": true,
+  "aircraft": {
+    "name": "CARM"
+  },
+  "geometry": {
+    "configuration": "CARM",
+    "reference": {
+      "aircraft": {
+        "area_m2": 2.231,
+        "chord_m": 0.5,
+        "span_m": 2.786,
+        "moment_center_m": [1.598, 0, 0]
+      }
+    },
+    "transformation_vectors": {},
+    "transformation_groups": {}
+  },
+  "control_surfaces": {
+    "transform": {},
+    "morphing": {}
+  },
+  "propulsion": {
+    "fan_inlets": [],
+    "fan_outlets": [],
+    "core_exhausts": [],
+    "propellers": []
+  },
+  "flight": {
+    "speed": {
+      "mode": "mach",
+      "value": 0.2
+    },
+    "atmosphere": {
+      "mode": "altitude",
+      "altitude_ft": 0,
+      "isa_deviation_k": 0
+    },
+    "angle_of_attack_deg": {
+      "value": 0
+    },
+    "sideslip_angle_deg": {
+      "range": {
+        "start": 0,
+        "end": 15,
+        "step": 1
+      }
+    }
+  },
+  "mesh": {
+    "mode": "from_source_solution"
+  },
+  "initialization": {
+    "mode": "saved_point",
+    "source": {
+      "campaign_id": "carm-example",
+      "polar": "0002",
+      "run": "same_run",
+      "match": {
+        "mach": 0.2,
+        "altitude_ft": 0,
+        "angle_of_attack_deg": 0,
+        "sideslip_angle_deg": 0
+      }
+    },
+    "first_point": "reuse_without_iterations"
+  },
+  "sweep": {
+    "strategy": "continue_solution",
+    "ordering": "ascending",
+    "iterations": {
+      "first_computed_point": 1000,
+      "subsequent_points": 1000,
+      "overrides": []
+    }
+  },
+  "solver": {
+    "name": "fluent",
+    "dimension": "3d",
+    "precision": "double",
+    "numerics": {
+      "profile": "density_based_implicit_steady_v1",
+      "turbulence_model": "spalart_allmaras"
+    },
+    "boundary_groups": {
+      "farfield": {
+        "zone_names": ["BDRY_FAR"]
+      },
+      "walls": {
+        "from_mesh_role": "wall"
+      },
+      "symmetry": {
+        "from_mesh_role": "symmetry"
+      },
+      "fluid": {
+        "from_mesh_role": "fluid"
+      }
+    }
+  },
+  "injection": {
+    "snippets": [],
+    "overrides": {},
+    "suppressions": [],
+    "extra_files": []
+  },
+  "execution": {
+    "mode": "submit_monitor_postprocess",
+    "scheduler": "pbs",
+    "resources": {
+      "cpus": 512,
+      "walltime_hours": 24
+    }
+  },
+  "postprocessing": {
+    "adf": {
+      "enabled": true,
+      "axes": ["body", "wind", "stability"],
+      "components": []
+    },
+    "flow_figures": false,
+    "cp_distributions": false,
+    "load_distributions": false,
+    "probes": {
+      "enabled": false
+    }
+  }
+}

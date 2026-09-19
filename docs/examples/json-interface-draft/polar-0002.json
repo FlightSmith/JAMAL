@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Proposta de interface: POLAR 002 do exemplo CARM. Assets, receita e parametros de meshing sao ilustrativos; este arquivo nao esta homologado para execucao.",
+  "identity": {
+    "campaign_id": "carm-example",
+    "polar": "0002"
+  },
+  "enabled": true,
+  "aircraft": {
+    "name": "CARM"
+  },
+  "geometry": {
+    "configuration": "CARM",
+    "assets": [
+      {
+        "id": "airframe",
+        "kind": "ansa_database",
+        "path": "assets/CARM.ansa",
+        "length_unit": "mm"
+      }
+    ],
+    "reference": {
+      "aircraft": {
+        "area_m2": 2.231,
+        "chord_m": 0.5,
+        "span_m": 2.786,
+        "moment_center_m": [1.598, 0, 0]
+      }
+    },
+    "transformation_vectors": {},
+    "transformation_groups": {}
+  },
+  "control_surfaces": {
+    "transform": {},
+    "morphing": {}
+  },
+  "propulsion": {
+    "fan_inlets": [],
+    "fan_outlets": [],
+    "core_exhausts": [],
+    "propellers": []
+  },
+  "flight": {
+    "speed": {
+      "mode": "mach",
+      "value": 0.2
+    },
+    "atmosphere": {
+      "mode": "altitude",
+      "altitude_ft": 0,
+      "isa_deviation_k": 0
+    },
+    "angle_of_attack_deg": {
+      "range": {
+        "start": -10,
+        "end": 20,
+        "step": 1
+      }
+    },
+    "sideslip_angle_deg": {
+      "value": 0
+    }
+  },
+  "mesh": {
+    "mode": "generate",
+    "mesher": "ansa",
+    "batch_scenario": {
+      "path": "assets/Batch_Scenario_carm.ansa"
+    },
+    "parameters": {
+      "mesh_type": "airframe",
+      "flow_type": "rans",
+      "design_reynolds": 3000000,
+      "wing_reference_length_m": 0.5,
+      "body_reference_length_m": 4.3,
+      "target_y_plus": 1,
+      "layer_control": {
+        "mode": "growth_ratio",
+        "value": 1.1
+      },
+      "auto_trim_symmetry": false,
+      "mirror": false,
+      "allow_single_cons": false,
+      "allow_triple_cons": true,
+      "save_surface_and_layer_meshes": true,
+      "size_box": {
+        "enabled": false
+      },
+      "surface_offset": {
+        "enabled": false
+      },
+      "zone_cuts": []
+    }
+  },
+  "initialization": {
+    "mode": "new_solution"
+  },
+  "sweep": {
+    "strategy": "continue_solution",
+    "ordering": "zero_positive_then_negative",
+    "iterations": {
+      "first_computed_point": 3000,
+      "subsequent_points": 1000,
+      "overrides": []
+    }
+  },
+  "solver": {
+    "name": "fluent",
+    "dimension": "3d",
+    "precision": "double",
+    "numerics": {
+      "profile": "density_based_implicit_steady_v1",
+      "turbulence_model": "spalart_allmaras"
+    },
+    "boundary_groups": {
+      "farfield": {
+        "zone_names": ["BDRY_FAR"]
+      },
+      "walls": {
+        "from_mesh_role": "wall"
+      },
+      "symmetry": {
+        "from_mesh_role": "symmetry"
+      },
+      "fluid": {
+        "from_mesh_role": "fluid"
+      }
+    }
+  },
+  "injection": {
+    "snippets": [],
+    "overrides": {},
+    "suppressions": [],
+    "extra_files": []
+  },
+  "execution": {
+    "mode": "submit_monitor_postprocess",
+    "scheduler": "pbs",
+    "resources": {
+      "cpus": 512,
+      "walltime_hours": 24
+    }
+  },
+  "postprocessing": {
+    "adf": {
+      "enabled": true,
+      "axes": ["body", "wind", "stability"],
+      "components": []
+    },
+    "flow_figures": false,
+    "cp_distributions": false,
+    "load_distributions": false,
+    "probes": {
+      "enabled": false
+    }
+  }
+}

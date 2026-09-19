@@ -1,0 +1,729 @@
+
+
+
+
+############################################################################################################
+#######################################  DIRECTORIES AND FILES  ############################################
+############################################################################################################
+
+GEOMETRY DIRECTORY:
+/lustre/cae/validation/cfd/CARM/JAMAL/01-GRIDS/ANSA
+
+GEOMETRY FILES:
+CARM.ansa    
+
+BATCH SCENARIOS DIRECTORY:
+/lustre/cae/validation/cfd/CARM/JAMAL/01-GRIDS/ANSA/01-BATCH
+
+BATCH SCENARIOS FILE:
+/lustre/cae/validation/cfd/CARM/JAMAL/01-GRIDS/ANSA/batch_scenario_carm.ansa
+
+ANSAMESH SCRIPT DIRECTORY:
+/lustre/work/mdesouza/jamal/99/bin
+
+ANSAMESH SCRIPT FILE:
+ansamesh_script.py
+
+
+
+
+
+
+############################################################################################################
+###############################  BOUNDARY LAYER MESH PARAMETERS CALCULATION  ###############################
+############################################################################################################
+
+*********************************************************************************************  
+Flow Type.........................................:RANS		
+Reynolds Number...................................:3000000 		
+Wing Reference Length.............................:1.1580	m	
+Fuselage Reference Length.........................:4.300	m	
+Dimensionless Wall Distance Y+....................:1.0000		
+*********************************************************************************************  
+
+*********************************************************************************************  
+First Layer Height................................:0.0100	mm		(everywhere)	
+Boundary Layer Height.............................:30.4   	mm		(wing)			
+Layers Growth Ratio...............................:1.1500			(everywhere)	
+Number of Layers..................................:44      			(wing)			
+Boundary Layer Height.............................:112.8  	mm		(fuselage) 		
+Number of Layers..................................:53      			(fuselage)		
+********************************************************************************************* 
+
+
+
+
+
+############################################################################################################
+################################################  GEOMETRY  ################################################
+############################################################################################################
+
+
+
+Loading geometry ...   
+./CARM.ansa
+File creation info :
+HOST : ADS-74ZNFY3
+USER : jose.pontarolli
+DATE :21-JUL-2026  15:55:05
+  
+LAST EDIT : 
+HOST : ADS-HLJJPN3
+USER : maximiliano.desouza
+DATE :11-AUG-2026  15:46:50
+  
+Done loading geometry.
+
+Merging batch mesh scenarios ...Merge log file: /lustre/home/mdesouza/.BETA/ANSA/version_24.1.1/ANSA_Merge.log
+  
+./01-BATCH/batch_scenario_carm.ansa
+File creation info :
+HOST : ADS-74ZNFY3
+USER : jose.pontarolli
+DATE :21-JUL-2026  15:55:05
+  
+LAST EDIT : 
+HOST : ADS-HLJJPN3
+USER : maximiliano.desouza
+DATE :11-AUG-2026  16:57:49
+  
+Batch mesh scenarios merged.
+
+
+
+############################################################################################################
+###########################################  CREATING SIZE FIELD  ##########################################
+############################################################################################################
+
+
+
+Reseting macros and deleting hotpoints...
+
+
+Checking geometry... Please wait.
+Geometry OK!
+
+Setting symmetry zone type to the PID named BDRY_SYM.
+
+Setting internal zone type to the PID named _FTP or _DSK.
+
+No duplicate PID names found.
+
+Saving geometry...
+Please Wait. Saving Database 
+Save Completed 
+
+
+Time...........................: 0.01 minutes
+Hexa block light volume representation de-activated.
+Global Light volume representation de-activated.
+
+Time...........................: 0.00 minutes
+
+
+
+############################################################################################################
+##############################################  SURFACE MESH  ##############################################
+############################################################################################################
+
+
+
+Running surface mesh: Surface_Mesh_Scenario
+Please wait.
+.Batch Mesh log file: ./CARM.ansa.log
+Running Batch Mesh...
+  Running Meshing Scenario: Surface_Mesh_Scenario
+    Initializing macros...
+    Completed in 0.8sec
+    Recognizing features...
+    Completed in 0.1sec
+    Preparing macros...
+    Completed in 12.9sec
+    Meshing macros...
+    Completed in 12.9sec
+    Processing mesh...
+    Completed in 1min:47.3sec
+    Finalizing...
+    Completed in 0.3sec
+    All macros meshed.
+  Scenario completed in 2min:16.2sec
+Batch Mesh completed in  2min:16.4sec
+
+Scenario has run.
+
+Checking surface mesh quality...
+Frozen shells/macros meshed with Map mesh will be excluded.
+  - Maximum shell skewness for tria elements : 0.95  FLUENT
+  - Maximum shell warping angle : 10  IDEAS
+skewness shells 1 off in Failed Range
+Trying to improve skewness/warping of the selected off elements...
+Checking for bad skewness/warping again...
+All bad skewness/warping have been solved
+
+Identify trias on corners and swap them.
+0 Corner triangles found !
+
+
+Checking for sharp edges with angle above 160.0 deg
+No sharp edges found. Good!
+
+Checking for nodes away from symmetry plane ...
+All symmetry nodes lie on symmetry plane.
+Saving surface mesh...
+Please Wait. Saving Database 
+Save Completed 
+
+
+Time...........................: 2.40 minutes
+
+
+
+############################################################################################################
+##############################################  LAYERS MESH  ###############################################
+############################################################################################################
+
+
+
+Running layers mesh: Layers_Mesh_Scenario
+Please wait.
+.Batch Mesh log file: ./CARM.ansa.log
+Running Batch Mesh...
+  Running Layers Scenario: Layers_Mesh_Scenario
+    Running Session: Layers_Mesh_Session
+        
+        Generating layer 1
+        Max skewness: 0.937. 
+        
+        Generating layer 2
+        Max skewness: 0.937. 
+        
+        Generating layer 3
+        Max skewness: 0.937. 
+        
+        Generating layer 4
+        Max skewness: 0.937. 
+        
+        Generating layer 5
+        Max skewness: 0.937. 
+        
+        Generating layer 6
+        Max skewness: 0.937. 
+        
+        Generating layer 7
+        Max skewness: 0.937. 
+        
+        Generating layer 8
+        Max skewness: 0.937. 
+        
+        Generating layer 9
+        Max skewness: 0.937. 
+        
+        Generating layer 10
+        Max skewness: 0.937. 
+        
+        Generating layer 11
+        Max skewness: 0.937. 
+        
+        Generating layer 12
+        Max skewness: 0.937. 
+        
+        Generating layer 13
+        Max skewness: 0.937. 
+        
+        Generating layer 14
+        Max skewness: 0.937. 
+        
+        Generating layer 15
+        Max skewness: 0.937. 
+        
+        Generating layer 16
+        Max skewness: 0.937. 
+        
+        Generating layer 17
+        Max skewness: 0.937. 
+        
+        Generating layer 18
+        Max skewness: 0.937. 
+        
+        Generating layer 19
+        Max skewness: 0.937. 
+        
+        Generating layer 20
+        Max skewness: 0.94. 
+        
+        Generating layer 21
+        Max skewness: 0.941. 
+        
+        Generating layer 22
+        Max skewness: 0.942. 
+        
+        Generating layer 23
+        Max skewness: 0.943. 
+        
+        Generating layer 24
+        Max skewness: 0.944. 
+        
+        Generating layer 25
+        Max skewness: 0.945. 
+        
+        Generating layer 26
+        Max skewness: 0.944. 
+        
+        Generating layer 27
+        Max skewness: 0.944. 
+        
+        Generating layer 28
+        Max skewness: 0.944. 
+        
+        Generating layer 29
+        Max skewness: 0.944. 
+        
+        Generating layer 30
+        Max skewness: 0.943. 
+        
+        Generating layer 31
+        Max skewness: 0.943. 
+        
+        Generating layer 32
+        Max skewness: 0.942. 
+        
+        Generating layer 33
+        Max skewness: 0.941. 
+        
+        Generating layer 34
+        Max skewness: 0.939. 
+        
+        Generating layer 35
+        Collapsed: 27 nodes.   Max skewness: 0.968. 
+        
+        Generating layer 36
+        Collapsed: 169 nodes.   Max skewness: 0.97. 
+        
+        Generating layer 37
+        Collapsed: 291 nodes.   Max skewness: 0.979. 
+        
+        Generating layer 38
+        Collapsed: 493 nodes.   Max skewness: 0.97. 
+        
+        Generating layer 39
+        Collapsed: 847 nodes.   Max skewness: 0.97. 
+        
+        Generating layer 40
+        Collapsed: 1016 nodes.   Max skewness: 0.971. 
+        
+        Generating layer 41
+        Collapsed: 1002 nodes.   Max skewness: 0.955. 
+        
+        Generating layer 42
+        Collapsed: 2437 nodes.   Max skewness: 0.931. 
+        
+        Generating layer 43
+        Collapsed: 1814 nodes.   Max skewness: 0.949. 
+        
+        Generating layer 44
+        Collapsed: 815 nodes.   Max skewness: 0.924. 
+        
+        Generating layer 45
+        Collapsed: 837 nodes.   Max skewness: 0.92. 
+        
+        Generating layer 46
+        Collapsed: 807 nodes.   Max skewness: 0.914. 
+        
+        Generating layer 47
+        Collapsed: 868 nodes.   Max skewness: 0.971. 
+        
+        Generating layer 48
+        Collapsed: 924 nodes.   Max skewness: 0.943. 
+        
+        Generating layer 49
+        Collapsed: 939 nodes.   Max skewness: 0.9. 
+        
+        Generating layer 50
+        Collapsed: 964 nodes.   Max skewness: 0.93. 
+        
+        Generating layer 51
+        Collapsed: 875 nodes.   Max skewness: 0.944. 
+        
+        Generating layer 52
+        Collapsed: 876 nodes.   Max skewness: 0.862. 
+        
+        Generating layer 53
+        Collapsed: 912 nodes.   Max skewness: 0.905. 
+        
+        Generating layer 54
+        Collapsed: 964 nodes.   Max skewness: 0.877. 
+        
+        Generating layer 55
+        Collapsed: 956 nodes.   Max skewness: 0.894. 
+        
+        Generating layer 56
+        Collapsed: 1102 nodes.   Max skewness: 0.94. 
+        
+        Generating layer 57
+        Collapsed: 1126 nodes.   Max skewness: 0.832. 
+        
+        Generating layer 58
+        Collapsed: 1898 nodes.   Max skewness: 0.853. 
+        
+        A new SET: "Maximum top cap skewness reached" has been created to indicate the problematic locations! 
+        A new SET: "Extreme normal vector angles" has been created to indicate the problematic locations! 
+        A new SET: "Top cap intersections" has been created to indicate the problematic locations! 
+        A new SET: "Top cap proximity" has been created to indicate the problematic locations! 
+        A new SET: "Small edges at top cap" has been created to indicate the problematic locations! 
+        A new SET: "Layer quad splits" has been created to indicate the problematic locations! 
+        
+        Layers generation completed
+        Layer coverage overview (area %): Full: 91.78% Partial: 8.22% Uncovered: 0.00%
+        Total solids generated: 27292964
+    Session completed in 3min:14.4sec
+  Scenario completed in 3min:14.4sec
+  Running fix quality on created solids : 
+    Fixing Solids Quality.
+    Trying to fix 1520 violating and neighboring elements...
+    Fix Solids Quality results:  fixed 358, skipped 959, moved 297 nodes, maximum movement= 1.57171, average movement= 0.11990
+    Worst quality values of violating elements:
+    Aspect Ratio : 16155.175
+    Skewness : 1.0000006
+    Warping : 109.49241
+    Jacobian : -1.
+    Growth Ratio : 201.80605
+    Non Orthogonality : 0.
+    Negative Volume : -.0018382
+    Left Handed : 1.2133092
+    Min Volume : -.0018382
+  Completed in 27.8sec
+Batch Mesh completed in  3min:49.1sec
+
+Scenario has run.
+Saving layers mesh...
+Please Wait. Saving Database 
+Save Completed 
+
+Layers mesh scenario completed!
+
+Checking layers mesh for negative volume... Please wait.
+Calculation method: PARTIAL
+1 Negative volume element(s) found
+
+Checking layers mesh for negative volume... Please wait.
+Calculation method: OPENFOAM PARTIAL
+1 Negative volume element(s) found
+
+Checking layers mesh for negative volume... Please wait.
+Calculation method: CFD++ PARTIAL
+16 Negative volume element(s) found
+
+Checking layers mesh for negative volume... Please wait.
+Calculation method: FLUENT
+1 Negative volume element(s) found
+
+Time...........................: 4.85 minutes
+
+
+
+############################################################################################################
+##############################################  VOLUME MESH  ###############################################
+############################################################################################################
+
+
+
+Running volume mesh: Volume_Mesh_Scenario
+Please wait.
+.Batch Mesh log file: ./CARM.ansa.log
+Running Batch Mesh...
+  Running Volume Scenario: Volume_Mesh_Scenario
+    Quads with poor angles at triple bounds found! 
+    A new SET: "Quads with poor angles at triple bounds" has been created to indicate the problematic locations! 
+    Volume detection may be erroneous!
+    1 Auto detected volume(s) assigned to scenario
+      No Auto detected volume(s) assigned to session AIRFRAME_VOLUME_2
+    
+    Warning !! Quads with extreme angles (<15, >165) on the boundary of volume with id 6 !
+    
+    1 volumes meshed successfully.
+    Total solids generated : 6707546
+    
+  Scenario completed in 5min:53.9sec
+Batch Mesh completed in  6min:2.1sec
+
+Scenario has run.
+Saving final mesh...
+Please Wait. Saving Database 
+Save Completed 
+
+
+############################################################################################################
+#############################################      ERROR       #############################################
+############################################################################################################
+    Volume detection may be erroneous!. Abort! Abort!
+############################################################################################################
+############################################################################################################
+############################################################################################################
+
+Volume mesh scenario completed!
+
+Time...........................: 6.91 minutes
+
+
+
+############################################################################################################
+#######################################  VOLUME QUALITY IMPROVEMENT  #######################################
+############################################################################################################
+
+
+
+Hiding all PIDs of zone type wall and symmetry.
+These PIDs will be frozen during volume quality improvement.
+Freeze non visible shells activated.
+
+Running Improve Quality Volume... Please wait.
+  - Maximum non orthogonality of a solid element : 0.05  FLUENT
+  - Maximum solid skewness for tetra elements : 0.95  FLUENT
+
+Maximum distance from external bounds that a node is allowed to move: 
+  - Maximum external bounds distance 0.6*local
+
+
+  - Negative volume calculation method : CFD++ PARTIAL
+Fixing Solids Quality.
+Trying to fix 79389 violating and neighboring elements...
+Fix Solids Quality results:  fixed 5258, skipped 64736, moved 7095 nodes, maximum movement= 1927.10414, average movement= 0.98379
+Worst quality values of violating elements:
+Aspect Ratio : 16155.175
+Skewness : .99976307
+Warping : 109.49241
+Growth Ratio : 201.80605
+Non Orthogonality : .00152098
+
+Execution time: 58 sec
+
+
+Time...........................: 1.00 minutes
+
+
+
+############################################################################################################
+######################################  CHECK AND FIX NEGATIVE VOLUME  #####################################
+############################################################################################################
+
+
+
+  First check: Auto fix.
+
+Checking and fixing negative volume... Please wait.
+Calculation method: PARTIAL
+No negative volume. Great Success!!!
+
+Checking and fixing negative volume... Please wait.
+Calculation method: OPENFOAM PARTIAL
+No negative volume. Great Success!!!
+
+Checking and fixing negative volume... Please wait.
+Calculation method: CFD++ PARTIAL
+No negative volume. Great Success!!!
+
+Checking and fixing negative volume... Please wait.
+Calculation method: CFD++ TOTAL
+No negative volume. Great Success!!!
+
+Checking and fixing negative volume... Please wait.
+Calculation method: FLUENT
+No negative volume. Great Success!!!
+
+
+
+  Final check: Auto fix.
+Calculation method: PARTIAL
+No negative volume. Great Success... Ufa!
+Calculation method: OPENFOAM PARTIAL
+No negative volume. Great Success... Ufa!
+Calculation method: CFD++ PARTIAL
+No negative volume. Great Success... Ufa!
+Calculation method: CFD++ TOTAL
+No negative volume. Great Success... Ufa!
+Calculation method: FLUENT
+No negative volume. Great Success... Ufa!
+
+Time...........................: 1.00 minutes
+
+
+
+############################################################################################################
+##############################################  SAVING MESH  ###############################################
+############################################################################################################
+
+Converting all volumes to light volume representation
+
+
+
+Setting PID volume... Please wait.
+Number of existing volumes: 6
+
+
+
+Compressing unused entities... Please wait
+.Compress:        6 'Properties' deleted.
+Compress:        6 'Nastran Materials' deleted.
+Compress:        6 'Dyna Materials' deleted.
+Compress:        6 'Pam Materials' deleted.
+Compress:        6 'Radioss Materials' deleted.
+Compress:        6 'Abaqus Materials' deleted.
+Compress:        6 'Ansys Materials' deleted.
+Compress:        6 'Permas Materials' deleted.
+Compress:        6 'Moldex3D Materials' deleted.
+Compress:        6 'ACTRAN Materials' deleted.
+Compress:        6 'Impetus Materials' deleted.
+Compress:        6 'Marc Materials' deleted.
+Compress:        6 'Sestra Materials' deleted.
+Compress:        6 'Theseus Materials' deleted.
+Compress:        7 'Sets' deleted.
+Compress:        1 'Empty ANSAPART' deleted.
+
+
+Used in BC file?  Shell names
+YES                BDRY_FAR
+YES                W_UPP
+YES                W_LOW
+YES                W_TIP
+YES                W_TED
+YES                W_COV
+YES                DUCT
+YES                V_TIP-LH
+YES                V_UPP-LH
+YES                V_LOW-LH
+YES                V_TED-LH
+YES                V_UPP-RH
+YES                V_LOW-RH
+YES                V_TIP-RH
+YES                V_TED-RH
+YES                W.AIL_TED-LH
+YES                W.AIL_UPP-LH
+YES                W.AIL_LOW-LH
+YES                W.AIL_TIP-LH
+YES                W.AIL_TED-RH
+YES                W.AIL_UPP-RH
+YES                W.AIL_LOW-RH
+YES                W.AIL_TIP-RH
+YES                W.FLP_TED-LH
+YES                W.FLP_UPP-LH
+YES                W.FLP_LOW-LH
+YES                W.FLP_TIP-LH
+YES                W.FLP_TED-RH
+YES                W.FLP_UPP-RH
+YES                W.FLP_LOW-RH
+YES                W.FLP_TIP-RH
+YES                B_FUS
+NO                top_cap_layers_nosmooth
+NO                top_cap_layers_wing
+NO                top_cap_layers_duct
+NO                top_cap_layers_vtail
+NO                top_cap_layers_fus
+
+Wall PIDs: W_UPP W_LOW W_TIP W_TED W_COV DUCT V_TIP-LH V_UPP-LH V_LOW-LH V_TED-LH V_UPP-RH V_LOW-RH V_TIP-RH V_TED-RH W.AIL_TED-LH W.AIL_UPP-LH W.AIL_LOW-LH W.AIL_TIP-LH W.AIL_TED-RH W.AIL_UPP-RH W.AIL_LOW-RH W.AIL_TIP-RH W.FLP_TED-LH W.FLP_UPP-LH W.FLP_LOW-LH W.FLP_TIP-LH W.FLP_TED-RH W.FLP_UPP-RH W.FLP_LOW-RH W.FLP_TIP-RH B_FUS
+Wall IDs: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+Symmetry PIDs: 
+Symmetry IDs: 
+Farfield PIDs: BDRY_FAR
+Farfield IDs: 1
+Prop_Disk PIDs: 
+Prop_Disk IDs: 
+Fan_Inlet PIDs: 
+Fan_Inlet IDs: 
+Fan_Outlet PIDs: 
+Fan_Outlet IDs: 
+Core_Outlet PIDs: 
+Core_Outlet IDs: 
+Flow_Thru_Plane PIDs: 
+Flow_Thru_Plane IDs: 
+Ground PIDs: 
+Ground IDs: 
+Fluid PIDs: Fluid
+Fluid IDs: 10000
+Dimension: 3D
+
+
+Final check neg vol auto fix
+
+Calculation method: CFD++ PARTIAL
+6 Negative volume element(s) found
+Attempting to fix negative elements.
+Checking for negative volume elements again.
+Calculation method: FLUENT
+No negative volume. Great Success!!!
+
+Saving final mesh...
+Please Wait. Saving Database 
+Save Completed 
+
+
+Time...........................: 2.35 minutes
+
+
+
+############################################################################################################
+##############################################  OUTPUT MESH  ###############################################
+############################################################################################################
+
+
+
+Writing solver output files to directory: ../Fluent_Meters_CARM
+../Fluent_Meters_CARM/CARM.msh.h5
+Please Wait. Processing data
+Output Completed.
+
+
+Time...........................: 0.18 minutes
+
+
+
+############################################################################################################
+###############################################  STATISTICS  ###############################################
+############################################################################################################
+
+
+
+TIME REQUIRED FOR EACH STEP: 
+
+GEOMETRY.....................................:   0.01 minutes 
+HEXA BLOCK MESH..............................:   0.00 minutes 
+SURFACE MESH.................................:   2.40 minutes 
+LAYERS MESH..................................:   4.85 minutes 
+VOLUME MESH..................................:   6.91 minutes 
+VOLUME QUALITY IMPROVEMENT...................:   1.00 minutes 
+CHECK AND FIX NEGATIVE VOLUME................:   0.40 minutes 
+SAVING MESH..................................:   2.35 minutes 
+OUTPUT MESH..................................:   0.18 minutes 
+
+TOTAL TIME FOR THE WHOLE PROCESS.............:  18.10 minutes 
+
+
+
+NUMBER OF SOLID ELEMENTS:
+
+TETRA........................................:    3649155   11 %
+PENTA........................................:    1711203    5 %
+HEXA.........................................:   27424594   81 %
+PYRAMID......................................:     960482    3 %
+
+TOTAL........................................:   33745434
+
+
+
+############################################################################################################
+############################################  SCRIPT COMPLETED  ############################################
+############################################################################################################
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    
+@@@       @.      @       @     @@@       @@@@       @  @@. .@      .N      @       Z:      N       @@@    
+@@@  @@@  @. @@@  @  @@@. @  @  N@@  @@,  @@@@   @@  @  @@. .@  @@  .N  @@  @  @@@  Z@  I@  N@  8@  @@@    
+@@@  @@@  @. @@@  @  @@@,,@  @7  @@@@@@:  @@@@@  I+++@  @@. .@  @@.,,N  @@.,@  @@@.,$@   @++N@   @++@@@    
+@@@       @.      @    @@@@  @@  @@@@@@,  @@@@@:  @@@@  @@. .@  @@@@@N  @@@@@     @@@@@   @@@@@   @@@@@    
+@@@?.     @.     ~@    @@@@  @@  @@@@@@,  @@@@@@.  @@@  @@. .@  @@@@@N  @@@@@     @@@@@@   @@@@@   @@@@    
+@@@@@@@@  @. @  @@@  @@8 .@  @@   @@@@@,  @@@@  @.  @@  @@. .@  @@   N  @@  @  @@@  I:  @  O@   @  @@@@    
+@@@  @@@  @. @=  @@  @@8  @       @@@@@,  @@@@  @@  O@  @@. .@  @@   N  @@  @  @@@  I:  @I  @   @:  @@@    
+@@@       @. @@  O@       @  @@O  @@@@@,  @@@@       @      .@       N      @       I:      D       @@@    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    

@@ -1,0 +1,85 @@
+{
+    "RUN": "0",
+    "POL": "001",
+    "ACRT": "TEST",
+    "AERODYNAMIC_CONFIGURATION": [
+        "wing_ht"
+    ],
+    "RUDDER": [
+        "-",
+        "-",
+        "-",
+        "-"
+    ],
+    "ELEVON": [
+        "-",
+        "-",
+        "-",
+        "-"
+    ],
+    "AILERON": [
+        "-",
+        "-",
+        "-",
+        "-"
+    ],
+    "FLAP": [
+        "-",
+        "-",
+        "-",
+        "-"
+    ],
+    "FANINLET": [
+        "-",
+        "-"
+    ],
+    "FANOULET": [
+        "-",
+        "-"
+    ],
+    "COREEXHA": [
+        "-",
+        "-"
+    ],
+    "PROPELLER": [
+        "-"
+    ],
+    "REF": "013",
+    "SET": "001",
+    "TURB": "SA",
+    "SOLVER": "FLUENT",
+    "START": "WARM",
+    "WTIME": "1d",
+    "CPU": "384",
+    "KNITERS": [
+        "3",
+        "0.1",
+        "1"
+    ],
+    "mach_vel_mode": "MACH",
+    "rey_alt_mode": "REY",
+    "ISAD": "0",
+    "alpha_cls_mode": "ALPHA",
+    "beta_cys_mode": "BETA",
+    "GRID": [
+        "wing_ht"
+    ],
+    "line_number": 2,
+    "MACH_VEL": [
+        0.2
+    ],
+    "REY_ALT": [
+        "24e6"
+    ],
+    "ALPHA_CLS": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0
+    ],
+    "BETA_CYS": [
+        0.0
+    ]
+}

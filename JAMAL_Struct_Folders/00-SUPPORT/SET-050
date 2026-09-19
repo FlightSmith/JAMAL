@@ -1,0 +1,143 @@
+;################################################################################################
+;############################### FLUENT JOURNAL FILE TEMPLATE ###################################
+;################################################################################################
+;
+/file/set-batch-options yes no yes no
+%trn_command% 
+;
+;##################################[COEF_DRIVER_DEFINITION]######################################
+; Maximum allowable iterations before updating the angle of attack (alpha) or sideslip angle (beta).  
+; ITER_UPDATE_OVER_ITERS_RATIO = 0.1
+;
+; Number of iterations for assessing the slope curve of dcl_dalpha or dcy_dbeta.
+; ITER_SLOPE_OVER_ITERS_RATIO = 0.15
+;
+; Starting iteration for the coef driver function.
+; ITER_START_OVER_ITERS_RATIO = 0.4
+;
+; Total number of iterations of the first case. this will be updated for the subsequent cases.
+; ITER_NEXT_CASE_OVER_ITERS_RATIO = 1
+;
+; Residual tolerance for the delta cl.
+; DELTA_CL_TOL = 0.001
+;
+; Residual tolerance for the delta cy.
+; DELTA_CY_TOL = 0.0001
+;
+; Delta alpha value for evaluating the slope curve dcl_dalpha.
+; DELTA_ALPHA_DEG_SLOPE = 1.0
+;
+; Delta beta value for evaluating the slope curve dcy_dbeta.
+; DELTA_BETA_DEG_SLOPE = 1.0
+;
+; Maximum allowed delta alpha or delta beta update.
+; DELTA_ANGLE_DEG_MAX = 10.0
+;
+;
+;########################################[LOAD_GRID_FILE]########################################
+/file/read-case "%grid_link%"
+/mesh/quality
+/mesh/repair-improve/improve-quality
+/mesh/quality
+;
+;
+;###########################################[GENERAL]############################################
+/define/operating-conditions/operating-pressure 0
+/define/models/solver/density-based-implicit yes
+/define/models/steady
+;/define/models/unsteady-1st-order yes
+;/define/models/unsteady-2nd-order yes
+;
+;
+;###########################################[MODELS]#############################################
+/define/models/energy yes
+%visc_model%
+%visc_model_1%
+%visc_model_2%
+;
+;
+;###########################################[MATERIAL]###########################################
+%material%
+;
+;
+;######################################[BOUNDARY_CONDITION]######################################
+/define/boundary-conditions/zone-type (%pid_far%) pressure-far-field
+/define/boundary-conditions/pressure-far-field %pid_far% %ffield_cond%
+;/define/boundary-conditions/zone-type (%pid_sym%) symmetry
+;/define/boundary-conditions/symmetry bdry_sym
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+; Reference values definition from far field.
+/report/reference-values/compute/pressure-far-field %pid_far%
+/report/reference-values/area %area%
+/report/reference-values/length %length%
+;
+/define/boundary-conditions/list-zones
+;
+;############################################[METHODS]###########################################
+/solve/set/flux-type 0
+/solve/set/gradient-scheme no no
+/solve/set/discretization-scheme/amg-c 1
+;%sa_nut_option%
+;
+;
+;###########################################[MONITORS]###########################################
+; Forces
+%cfx_monitor%
+%cfy_monitor%
+%cfz_monitor%
+;
+; Moments
+%cmx_monitor%
+%cmy_monitor%
+%cmz_monitor%
+;
+; Maximum pressure coeff
+/solve/monitors/volume/set-monitor cp-max "Max" pressure-coefficient (fluid) no yes no 1
+;
+; Average time-step
+/solve/monitors/volume/set-monitor tstep-ave "Volume-Average" time-step (fluid) no yes no 1
+;
+; Residuals criteria
+%residual_monitor%
+;
+;
+;########################################[INITIALIZATION]########################################
+/solve/initialize/compute-defaults/pressure-far-field %pid_far%
+/parallel/partition/set laplace-smoothing yes 10
+/solve/initialize/initialize-flow
+;
+;
+;#######################################[SOLUTION_STEERING]######################################
+/solve/set/solution-steering yes "subsonic" yes no  1.0 no
+/solve/set/set-solution-steering 200 100 20 1 50 0.75 5 100 200 400 500 1000 0.75 yes
+/solve/set/divergence-prevention enable yes 0.1
+;
+;
+;#############################################[UDF]##############################################
+;%udf_coef_drive_line1%
+;%udf_coef_drive_line2%
+;%udf_coef_drive_line3%
+;
+;%udf_mfr_line1%
+;%udf_mfr_line2%
+;%udf_mfr_line3%
+;
+;############################################[CASES]#############################################
+; Batch Process Setting
+/file/set-batch-options yes yes yes no
+;

@@ -1,0 +1,128 @@
+# Geometry
+gdir: "./"
+geometry: []
+
+# Auto Trim on symmetry plane
+auto_trim_symm: 0
+
+# Base mesh
+basemeshdir: ""
+basemesh: ""
+
+# Batch Scenarios
+bdir: "./01-BATCH"
+bscn: "Batch_Scenario_carm.ansa"
+
+# Mesh type
+# 1 Airframe mesh
+# 2 Sliding mesh
+mtype: 1
+
+# Single CONS allowed
+scons: 0
+
+# Tripple CONS allowed
+tcons: 0
+
+# Morphing Parameters
+morph:
+  mode: null
+  params: []
+
+# Transform Parameters
+trans:
+  mode: null
+  pids_a: "B.STK"
+  2point_a: "8036.5 0 0 8036.5 1 0"
+  pids_b: "V_UPP V_LOW V_TED V_CAP"
+  2point_b: "17171 -3788 1078 17168 -1790 -599"
+  pids_c: "W.FLP_UPP W.FLP_LOW W.FLP_TED W.FLP_CAP"
+  2point_c: "13563 -4422 -656 14269 -1602 -670"
+  params: []
+
+# Size field SIZE BOX maximum element length.
+sbox_max_len_surf: 0
+sbox_max_len_vol: 0
+# Size field SURFACE OFFSET offset wref ratio, sweep distance and maximum element length.
+surf_offset: 1000
+end_surf_offset: 2000
+sweep_distance: 10000
+sfso_max_len_surf: 60
+sfso_max_len_vol: 60
+
+# #### THIS IS FOR SLIDING MESH ONLY ####
+# Collective blade pitch angle
+bptch: 16.0
+
+# Number of blades
+bnumb: 2
+
+# Origin P0(x0,y0,z0) of the propeller coordinate system [mm]
+propx0: 8332.920994
+propy0: -5475.000442
+propz0: 2594.888184
+
+# propeller shaft axis: e1, e2 or e3
+psaxis: e3
+
+# Propeller pitch UP/DOWN angle [deg]  (UP is positive, DOWN is negative)
+pptch: 0.0
+
+# Propeller toe IN/OUT angle [deg]  LHS: (IN is negative, OUT is positive), RHS: (IN is positive, OUT is negative)
+ptoe: 0.0
+
+# Flow type (RANS or EULER)
+ftype: RANS
+
+# Reynolds number based on wing reference length
+wrey: 240000
+
+# Wing Y+
+wypls: 1.0
+
+# Wing reference length [m]
+wlref: 3.665
+
+# Zone Cut name
+zonen: "SLAT_LE	SLAT_TE		WING_LE		WING_TE		NACELLE_LE		NACELLE_TE"
+
+# Zone Cut first height as a fraction of the wing reference length wlref
+zoneh: "0.0002	0.0002		0.0002		0.0002		0.0002			0.0002"
+
+# Zone Cut length as a fraction of the wing reference length wlref
+zonel: "0.02		0.02		0.02		0.02		0.02			0.02"
+
+# Number of layers (INTEGER) OR layers growth ratio (FLOAT) for the wing set
+# If you want to specify number of layers, enter a INTEGER number. Ex: 45
+# If you want to specify the layers growth ratio, enter a FLOAT number. Ex: 1.15
+wlay: 1.10
+
+# Fuselage reference length [m]
+blref: 36.0
+
+# Do you want to save the SURFACE mesh and the LAYERS mesh? 0: NO ; 1: YES
+msave: 1
+
+# Do you want to calculate Reynolds number based on flight condition? 0: NO ; 1: YES
+fcond: 0
+
+# Choose the output format. For more than one format you have to sum the flag numbers. 
+# (Example: For CFD++ and Fluent, fmout=5).
+# 1	CFD++	
+# 2	CGNS
+# 4	Fluent
+# 8	OpenFoam
+fmout: 1
+
+# Choose the output unit system. For more than one unit system you have to sum the flag numbers.
+# 1	Meter	
+# 2	Inch
+unout: 1
+
+# Output model scale factor. 
+# This is used for scalling the model to a specific size (scout=0.06 for instance).
+# If you do not want to use it, scout=0. Do NOT use it for unit system conversion purpose.
+scout: 0
+
+# Mirror mesh. 0: NO ; 1: YES
+mirme: 0
