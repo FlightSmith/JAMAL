@@ -83,6 +83,23 @@ do not invent behaviour.
 - Superseded ADR text is struck through, never deleted.
 - Every requested change gets one file in `docs/changelog/`.
 
+### "Pressing decisions & concerns" block (docs/README.md)
+
+The block near the top of `docs/README.md` is a **priority index**, not a
+data store. Rules:
+
+- It **must be updated in the same commit** whenever: an ADR is accepted,
+  a D-item (OPEN-QUESTIONS) is opened/closed, or the current milestone
+  (e.g. W1) changes. Same discipline as ADR→spec sync — do not defer it.
+- Max 5 items, one line each, every line pointing at the owning section.
+  No new information may live in the block; if deleting it would lose
+  information, it is written wrong.
+- Distinguish **owner-blocking** decisions (only the owner can make them;
+  agents/developers must not) from **work-focus** items.
+- Staleness check: if any line contradicts OPEN-QUESTIONS or DECISIONS,
+  the block is stale — fix it in your change even if your change didn't
+  cause it.
+
 ### Changelog naming
 
 `docs/changelog/YYYY-MM-DD-NN-slug.md` — **NN is a two-digit sequence

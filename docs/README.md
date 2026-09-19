@@ -68,6 +68,32 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
   (ADR-0010).
 - W1 (case-file schema) is the first implementation target.
 
+## Pressing decisions & concerns
+
+> Index only — one line per item, pointer to the owning section. Max 5
+> items. Updated in the same commit whenever an ADR lands, a D-item
+> closes, or the milestone changes (see AGENTS.md §4). Details live in
+> OPEN-QUESTIONS/DECISIONS, never here.
+
+**Blocking the owner** (decisions only the owner can make):
+
+1. **D05 — ADF contract** (external team sign-off) → blocks the
+   post-processor; see OPEN-QUESTIONS D05 + SPECS §9.1.
+2. **D08 — real inputs** (geometry/batch/templates to replace the
+   placeholders) → blocks HPC parity testing; see OPEN-QUESTIONS D08.
+3. **D04 — transform/morph translation limits** → blocks control-surface
+   parity; see OPEN-QUESTIONS D04.
+
+**Current work focus:**
+
+4. **W1 — case-file schema** (first implementation milestone) → see
+   WORKSHOPS open agendas + SPECS §1.
+5. **D07 — cluster integration** (`submit_fluent` vs direct PBS) → can
+   start in parallel; see OPEN-QUESTIONS D07.
+
+Maintainer note: if an item here contradicts OPEN-QUESTIONS or an ADR,
+the other document wins and this list is stale — fix it immediately.
+
 ## History
 
 This repository is the rebuilt home of the JAMAL v2 effort. The earlier
