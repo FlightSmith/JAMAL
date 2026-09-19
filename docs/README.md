@@ -72,24 +72,32 @@ the new JSON examples are not an accepted schema or runnable cluster inputs.
 
 > Index only — one line per item, pointer to the owning section. Max 5
 > items. Updated in the same commit whenever an ADR lands, a D-item
-> closes, or the milestone changes (see AGENTS.md §4). Details live in
-> OPEN-QUESTIONS/DECISIONS, never here.
+> closes, or the milestone changes (see AGENTS.md §4). All substance
+> lives in the linked documents; **if this block vanishes, nothing is
+> lost** — it can be rebuilt from OPEN-QUESTIONS + DECISIONS at any
+> time.
+>
+> Last reviewed: 2026-09-19
 
-**Blocking the owner** (decisions only the owner can make):
+**Co-owner decisions in flight** (either co-owner may decide; the
+decision must be recorded as an ADR + changelog entry, which informs the
+other):
 
-1. **D05 — ADF contract** (external team sign-off) → blocks the
-   post-processor; see OPEN-QUESTIONS D05 + SPECS §9.1.
+1. **D05 — ADF contract** (needs external team sign-off) → blocks the
+   post-processor; see [OPEN-QUESTIONS D05](<OPEN-QUESTIONS.md>) and
+   [SPECS §9.1](<SPECS.md>).
 2. **D08 — real inputs** (geometry/batch/templates to replace the
-   placeholders) → blocks HPC parity testing; see OPEN-QUESTIONS D08.
+   placeholders) → blocks HPC parity testing; see
+   [OPEN-QUESTIONS D08](<OPEN-QUESTIONS.md>).
 3. **D04 — transform/morph translation limits** → blocks control-surface
-   parity; see OPEN-QUESTIONS D04.
+   parity; see [OPEN-QUESTIONS D04](<OPEN-QUESTIONS.md>).
 
 **Current work focus:**
 
 4. **W1 — case-file schema** (first implementation milestone) → see
-   WORKSHOPS open agendas + SPECS §1.
+   [WORKSHOPS open agendas](<WORKSHOPS.md>) and [SPECS §1](<SPECS.md>).
 5. **D07 — cluster integration** (`submit_fluent` vs direct PBS) → can
-   start in parallel; see OPEN-QUESTIONS D07.
+   start in parallel; see [OPEN-QUESTIONS D07](<OPEN-QUESTIONS.md>).
 
 Maintainer note: if an item here contradicts OPEN-QUESTIONS or an ADR,
 the other document wins and this list is stale — fix it immediately.
